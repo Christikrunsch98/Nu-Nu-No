@@ -13223,6 +13223,71 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5124417129142218896, guid: 2db51a3ce7d7fe34a934d68f0c488f54, type: 3}
   m_PrefabInstance: {fileID: 820187182}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &823902939
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 4d275948843132b40b1a4cdc04870f94, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.8313577
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4d275948843132b40b1a4cdc04870f94, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.00190413
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4d275948843132b40b1a4cdc04870f94, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -16.595142
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4d275948843132b40b1a4cdc04870f94, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4d275948843132b40b1a4cdc04870f94, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4d275948843132b40b1a4cdc04870f94, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4d275948843132b40b1a4cdc04870f94, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4d275948843132b40b1a4cdc04870f94, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4d275948843132b40b1a4cdc04870f94, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4d275948843132b40b1a4cdc04870f94, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4d275948843132b40b1a4cdc04870f94, type: 3}
+      propertyPath: m_Name
+      value: Character_Female_Hotel Owner
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 4d275948843132b40b1a4cdc04870f94, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: c71a40649d3163b4a8c3ce352c3021cc, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 4d275948843132b40b1a4cdc04870f94, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4d275948843132b40b1a4cdc04870f94, type: 3}
 --- !u!1 &841128059
 GameObject:
   m_ObjectHideFlags: 0
@@ -14113,6 +14178,70 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 873179097}
   m_CullTransparentMesh: 1
+--- !u!1001 &882008624
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 7d5a7cd7364efd84b9bd3f3977736cfd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.3899643
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7d5a7cd7364efd84b9bd3f3977736cfd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.00190413
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7d5a7cd7364efd84b9bd3f3977736cfd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -17.019215
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7d5a7cd7364efd84b9bd3f3977736cfd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7d5a7cd7364efd84b9bd3f3977736cfd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7d5a7cd7364efd84b9bd3f3977736cfd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7d5a7cd7364efd84b9bd3f3977736cfd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7d5a7cd7364efd84b9bd3f3977736cfd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7d5a7cd7364efd84b9bd3f3977736cfd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7d5a7cd7364efd84b9bd3f3977736cfd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7d5a7cd7364efd84b9bd3f3977736cfd, type: 3}
+      propertyPath: m_Name
+      value: Test_
+      objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: 7d5a7cd7364efd84b9bd3f3977736cfd, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c078e1d58d5617d489e54afd3412ba66, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7d5a7cd7364efd84b9bd3f3977736cfd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1388678375}
+  m_SourcePrefab: {fileID: 100100000, guid: 7d5a7cd7364efd84b9bd3f3977736cfd, type: 3}
 --- !u!224 &888636339 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8072890477496077224, guid: 085ce58b196caa446a8545c9dd388793, type: 3}
@@ -22483,6 +22612,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 863846739}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!1 &1388678374 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7d5a7cd7364efd84b9bd3f3977736cfd, type: 3}
+  m_PrefabInstance: {fileID: 882008624}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1388678375
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1388678374}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 4d275948843132b40b1a4cdc04870f94, type: 3}
+  m_Controller: {fileID: 9100000, guid: c71a40649d3163b4a8c3ce352c3021cc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1390846723
 GameObject:
   m_ObjectHideFlags: 0
@@ -36925,10 +37080,16 @@ PrefabInstance:
       propertyPath: m_WarningMessage
       value: "\nBinding warning: Some generic clip(s) animate transforms that are
         already bound by a Humanoid avatar. These transforms can only be changed
-        by Humanoid clips.\n\tTransform 'Bip001 R Calf'\n\tTransform 'Bip001 R Calf'\n\tTransform
-        'Bip001 R Thigh'\n\tTransform 'Bip001 L Foot'\n\tTransform 'Bip001 L Thigh'\n\tTransform
-        'Bip001 L Calf'\n\tTransform 'Bip001 R Thigh'\n\tTransform 'Bip001 L Foot'\n\tTransform
-        'Bip001 L Thigh'\n\tTransform 'Bip001 L Calf'\n\tFrom animation clip 'Girl_Walk'"
+        by Humanoid clips.\n\tTransform 'Bip001'\n\tTransform 'Bip001 R Foot'\n\tTransform
+        'Bip001 R Hand'\n\tTransform 'Bip001 R Finger1'\n\tTransform 'Bip001 L Finger11'\n\tTransform
+        'Bip001 R Finger11'\n\tTransform 'Bip001 R Toe0'\n\tTransform 'Bip001 Spine1'\n\tTransform
+        'Bip001 L Finger2'\n\tTransform 'Bip001 L Finger12'\n\tand more ...\n\tFrom
+        animation clip 'Sitting_LookingDown'\n\tFrom animation clip 'Sitting Talking'\n\tFrom
+        animation clip 'Sitting Expession'"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3608345724585646000, guid: 4d1e271b9c29ccc4b91951e4c8c366da, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5527403361076630514, guid: 4d1e271b9c29ccc4b91951e4c8c366da, type: 3}
       propertyPath: m_Enabled
@@ -38708,3 +38869,5 @@ SceneRoots:
   - {fileID: 1448978161}
   - {fileID: 1588848707}
   - {fileID: 1612219750}
+  - {fileID: 882008624}
+  - {fileID: 823902939}
