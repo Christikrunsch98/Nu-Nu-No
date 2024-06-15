@@ -1,5 +1,20 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!206 &-9217141393719922267
+BlendTree:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Blend Tree
+  m_Childs: []
+  m_BlendParameter: Blend
+  m_BlendParameterY: Blend
+  m_MinThreshold: 0
+  m_MaxThreshold: 1
+  m_UseAutomaticThresholds: 1
+  m_NormalizedBlendValues: 0
+  m_BlendType: 0
 --- !u!1109 &-8865032552949625030
 AnimatorTransition:
   m_ObjectHideFlags: 1
@@ -28,10 +43,10 @@ AnimatorStateMachine:
     m_Position: {x: 30, y: 230, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2904797432894388528}
-    m_Position: {x: 330.47595, y: 230.5567, z: 0}
+    m_Position: {x: 330, y: 230, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4167092515472075379}
-    m_Position: {x: 362.47583, y: 343.10776, z: 0}
+    m_Position: {x: 360, y: 340, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5266685867692826259}
     m_Position: {x: 110, y: 340, z: 0}
@@ -45,7 +60,7 @@ AnimatorStateMachine:
   m_EntryPosition: {x: 50, y: 120, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: 2904797432894388528}
+  m_DefaultState: {fileID: 4167092515472075379}
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -54,7 +69,13 @@ AnimatorController:
   m_PrefabAsset: {fileID: 0}
   m_Name: Female
   serializedVersion: 5
-  m_AnimatorParameters: []
+  m_AnimatorParameters:
+  - m_Name: Blend
+    m_Type: 1
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -166,7 +187,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: c1f65cfe61ccff0499e8970abb989ae3, type: 3}
+  m_Motion: {fileID: -9217141393719922267}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

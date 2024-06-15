@@ -6,16 +6,15 @@ TagManager:
   tags:
   - Anchor
   - Bullet
-  - Boxing
-  - BoxingTarget
+  - Enemy
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - BoxingTarget
+  - Character
   - Water
   - UI
-  - 
+  - Decoration
   - 
   - 
   - 
