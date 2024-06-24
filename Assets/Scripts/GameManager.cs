@@ -11,7 +11,7 @@ public class OfficeSpots
 
 public class GameManager : MonoBehaviour
 {
-    public List<OfficeSpots> officeSpots;
+    public List<OfficeSpots> OfficeSpots;
 
     // Die statische Instanz des GameManagers
     private static GameManager _instance;
@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
     // Methode, um ein OfficeSpot-Objekt anhand des Namens zu finden
     public OfficeSpots GetOfficeSpotByName(string name)
     {
-        foreach (OfficeSpots spot in officeSpots)
+        foreach (OfficeSpots spot in OfficeSpots)
         {
             if (spot.Name == name)
             {
