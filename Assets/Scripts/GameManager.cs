@@ -6,11 +6,14 @@ using UnityEngine;
 public class OfficeSpots
 {
     public string Name;
-    public Transform Position;
+    public Transform Position;    
 }
 
 public class GameManager : MonoBehaviour
 {
+    public Transform Player;
+    public List<People> NPCs;
+
     public List<OfficeSpots> OfficeSpots;
 
     // Die statische Instanz des GameManagers
@@ -60,4 +63,29 @@ public class GameManager : MonoBehaviour
         return null; // Rückgabe von null, falls kein passender Spot gefunden wurde
     }
 
+
+    /// Game State Vorgaben ///
+    /// A - Der Anfang
+    /// Nörgler.OfficeSpot -> Küche_Kaffee
+    /// Nörgler.Reaktion -> Nörgler.OfficeSpot -> Küche_Snackautomat
+    /// -
+    /// B - Teil 1
+    /// Ätzender Kollege.OfficeSpot -> Arbeitsplatz.ÄtzenderKollege
+    /// Spieler Wegpunkt -> Arbeitsplatz.Spieler
+    /// Andere auf ihren Plätzen oder irgendwo
+    /// Meetingraum geschlossen und niemand zu sehen weiter
+    /// -
+    /// C - Teil 2
+    /// Alle im Meetingraum.Sitz1,.Sitz2,.Sitz3,...
+    /// Spieler Wegpunkt -> Meetingraum.Sitz6
+    /// Nach dem Verlassen Teamleiter.NebenSpieler
+    /// -
+    /// D - Teil 3
+    /// Küche - Fettsack -> Küche.Tischplatz2
+    /// Spieler -> Freie Sitzwahl aber Dialog mit Fettsack nötig
+    /// -
+    /// E - Teil 4
+    /// Spieler -> Büro des Chefs vor dem Schreibtisch des Ches
+    /// Chef -> Chefbüro.Chefsessel
+    /// Endboss Gespräch langer Dialog, Geistesraum besuche 2 oder so und dann Ende
 }

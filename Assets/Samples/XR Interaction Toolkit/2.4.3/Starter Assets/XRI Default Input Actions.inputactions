@@ -1119,6 +1119,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "AButton",
+                    "type": "Button",
+                    "id": "362c6c1f-4308-4fca-b636-a1299e613fbd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1328,6 +1337,17 @@
                     "processors": "",
                     "groups": "Generic XR Controller",
                     "action": "Aim Flags",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7708a92a-cf63-4df7-bda7-5e73bd902f3f",
+                    "path": "<XRController>{RightHand}/{PrimaryButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
