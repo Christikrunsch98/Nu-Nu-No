@@ -3,10 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class OfficeSpots
+public class OfficeSpot
 {
     public string Name;
     public Transform Position;    
+}
+
+public enum GameStateEnum
+{
+    State0,
+    State1,
+    State2,
+    State3,
 }
 
 public class GameManager : MonoBehaviour
@@ -14,7 +22,9 @@ public class GameManager : MonoBehaviour
     public Transform Player;
     public List<People> NPCs;
 
-    public List<OfficeSpots> OfficeSpots;
+    public List<OfficeSpot> OfficeSpots;
+
+    public GameStateEnum CurrentGameState;
 
     // Die statische Instanz des GameManagers
     private static GameManager _instance;
@@ -51,9 +61,9 @@ public class GameManager : MonoBehaviour
 
     // Hier kannst du weitere Methoden und Eigenschaften des GameManagers hinzufügen
     // Methode, um ein OfficeSpot-Objekt anhand des Namens zu finden
-    public OfficeSpots GetOfficeSpotByName(string name)
+    public OfficeSpot GetOfficeSpotByName(string name)
     {
-        foreach (OfficeSpots spot in OfficeSpots)
+        foreach (OfficeSpot spot in OfficeSpots)
         {
             if (spot.Name == name)
             {
@@ -88,4 +98,25 @@ public class GameManager : MonoBehaviour
     /// Spieler -> Büro des Chefs vor dem Schreibtisch des Ches
     /// Chef -> Chefbüro.Chefsessel
     /// Endboss Gespräch langer Dialog, Geistesraum besuche 2 oder so und dann Ende
+    /// 
+    public void ChangeCurrentGameState(GameStateEnum newGameState)
+    {        
+        switch (newGameState)
+        {
+            case GameStateEnum.State0:
+                // Code ...
+                break;
+            case GameStateEnum.State1:
+                // Code ...
+                break;
+            case GameStateEnum.State2:
+                // Code ...
+                break;
+            case GameStateEnum.State3:
+                // Code ...
+                break;
+        }
+
+        CurrentGameState = newGameState;
+    }
 }

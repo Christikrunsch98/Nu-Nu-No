@@ -3,6 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[System.Serializable]
+public class GameState
+{
+    public GameStateEnum CurrentGameState;
+    public OfficeSpot OnSpot;       // Name & Transform des Spots
+    public OfficeSpot OffSpot;      // Name & Transform des Spots
+    public OfficeSpot PatrolSpot;   // Spot benutzt im Off-State zum Laufen zwischen Off-Spot und diesem
+    public TextAsset OninkJSON;     // Ink file ON : Dialogue
+    public TextAsset OffinkJSON;    // Ink file OFF : Dialogue
+}
+
+public enum NPCState
+{
+    None = 0,
+    On = 1,
+    Off = 2,
+    OffPatrol = 3,
+    Talking = 4
+}
 
 public class People : MonoBehaviour
 {
@@ -15,6 +34,7 @@ public class People : MonoBehaviour
     [Header("Office Spot")]
     [SerializeField] Transform currentDestination;
     [SerializeField] float tolerance = 0.1f;            // Toleranzwert für das erreichen des Destination Points
+    [SerializeField] List<GameState> gameStates;        // Hält den On- & Off-Spot sowie Dialog für den aktuellen GameState
 
     [Header("Interaction")]
     [SerializeField] Transform DialoguePosition;

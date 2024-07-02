@@ -6170,6 +6170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentDestination: {fileID: 0}
   tolerance: 0.1
+  gameStates: []
   DialoguePosition: {fileID: 1906848409}
   interactionDistance: 2.5
   visualCue: {fileID: 1719656061}
@@ -10776,6 +10777,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentDestination: {fileID: 0}
   tolerance: 0.1
+  gameStates:
+  - CurrentGameState: 0
+    OnSpot:
+      Name: kitchen_coffeeMachine
+      Position: {fileID: 1719763818}
+    OffSpot:
+      Name: kitchen_tableNextToWindow
+      Position: {fileID: 78924236}
+    PatrolSpot:
+      Name: 
+      Position: {fileID: 0}
+    OninkJSON: {fileID: 4900000, guid: f4f70c472800612469046a49a86741a3, type: 3}
+    OffinkJSON: {fileID: 4900000, guid: 7ec61fdc79c690f4ea1cede0c807449d, type: 3}
+  - CurrentGameState: 1
+    OnSpot:
+      Name: kitchen_coffeeMachine
+      Position: {fileID: 1719763818}
+    OffSpot:
+      Name: kitchen_tableNextToWindow
+      Position: {fileID: 78924236}
+    PatrolSpot:
+      Name: 
+      Position: {fileID: 0}
+    OninkJSON: {fileID: 4900000, guid: f4f70c472800612469046a49a86741a3, type: 3}
+    OffinkJSON: {fileID: 4900000, guid: 7ec61fdc79c690f4ea1cede0c807449d, type: 3}
   DialoguePosition: {fileID: 1319813968}
   interactionDistance: 2.75
   visualCue: {fileID: 1144339189}
@@ -16850,6 +16876,7 @@ MonoBehaviour:
     Position: {fileID: 1719763818}
   - Name: kitchen_tableNextToWindow
     Position: {fileID: 78924236}
+  CurrentGameState: 0
 --- !u!4 &923357986
 Transform:
   m_ObjectHideFlags: 0
@@ -26151,6 +26178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentDestination: {fileID: 0}
   tolerance: 0.1
+  gameStates: []
   DialoguePosition: {fileID: 1934743273}
   interactionDistance: 2.75
   visualCue: {fileID: 1257663091}
@@ -32516,6 +32544,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentDestination: {fileID: 0}
   tolerance: 0.1
+  gameStates: []
   DialoguePosition: {fileID: 1895814694}
   interactionDistance: 2.5
   visualCue: {fileID: 1605509889}
@@ -38207,11 +38236,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1984668758703903146, guid: 65eb6b98091a5734ba9d9ca871cef69a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 1984668758703903146, guid: 65eb6b98091a5734ba9d9ca871cef69a, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 46
       objectReference: {fileID: 0}
     - target: {fileID: 1984668758913251958, guid: 65eb6b98091a5734ba9d9ca871cef69a, type: 3}
       propertyPath: m_AnchorMax.y
@@ -38235,11 +38264,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1984668759195752931, guid: 65eb6b98091a5734ba9d9ca871cef69a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 89.4
       objectReference: {fileID: 0}
     - target: {fileID: 1984668759195752931, guid: 65eb6b98091a5734ba9d9ca871cef69a, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 46
       objectReference: {fileID: 0}
     - target: {fileID: 1984668759388320319, guid: 65eb6b98091a5734ba9d9ca871cef69a, type: 3}
       propertyPath: m_AnchorMax.y
@@ -38263,19 +38292,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1984668759742193442, guid: 65eb6b98091a5734ba9d9ca871cef69a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 1984668759742193442, guid: 65eb6b98091a5734ba9d9ca871cef69a, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 46
       objectReference: {fileID: 0}
     - target: {fileID: 1984668759796306749, guid: 65eb6b98091a5734ba9d9ca871cef69a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 1984668759796306749, guid: 65eb6b98091a5734ba9d9ca871cef69a, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 46
       objectReference: {fileID: 0}
     - target: {fileID: 1984668759906836222, guid: 65eb6b98091a5734ba9d9ca871cef69a, type: 3}
       propertyPath: m_AnchorMax.y
@@ -38319,19 +38348,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1984668760071187146, guid: 65eb6b98091a5734ba9d9ca871cef69a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 89.4
       objectReference: {fileID: 0}
     - target: {fileID: 1984668760071187146, guid: 65eb6b98091a5734ba9d9ca871cef69a, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 46
       objectReference: {fileID: 0}
     - target: {fileID: 1984668760247740227, guid: 65eb6b98091a5734ba9d9ca871cef69a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 1984668760247740227, guid: 65eb6b98091a5734ba9d9ca871cef69a, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 46
       objectReference: {fileID: 0}
     - target: {fileID: 1984668760453204319, guid: 65eb6b98091a5734ba9d9ca871cef69a, type: 3}
       propertyPath: m_AnchorMax.y
@@ -38375,11 +38404,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1984668760601312619, guid: 65eb6b98091a5734ba9d9ca871cef69a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 1984668760601312619, guid: 65eb6b98091a5734ba9d9ca871cef69a, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 46
       objectReference: {fileID: 0}
     - target: {fileID: 1984668760711245992, guid: 65eb6b98091a5734ba9d9ca871cef69a, type: 3}
       propertyPath: m_AnchorMax.y
@@ -40135,6 +40164,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentDestination: {fileID: 0}
   tolerance: 0.1
+  gameStates: []
   DialoguePosition: {fileID: 902478329}
   interactionDistance: 2.75
   visualCue: {fileID: 1788044207}
