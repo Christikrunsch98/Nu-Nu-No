@@ -40,10 +40,12 @@ public class People : MonoBehaviour
     [SerializeField] Transform DialoguePosition;
     [SerializeField] float interactionDistance = 2.75f;    // Distanz, ab der Interagiert werden kann
     [SerializeField] GameObject visualCue;
-    [SerializeField] TextAsset inkJSON;
+    [SerializeField] TextAsset backupInkJSON;
     [SerializeField] Sprite npcImage;
+    [SerializeField] string npcName;
 
     [HideInInspector] public bool Interactable;
+    [HideInInspector] public bool? NPCOnState;  // nullable bool for backup json
 
     private NavMeshAgent agent;
 
@@ -51,6 +53,9 @@ public class People : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+
+        if (gameStates != null && gameStates.Count > 0) NPCOnState = true;  // use backupJSON when no game state instances exist / are set up in the list
+        else NPCOnState = null;
     }
 
     // Update is called once per frame
@@ -71,13 +76,21 @@ public class People : MonoBehaviour
 
         // OfficeSpot: Check if there is a Destination to walk to, if so move to that OfficeSpot Position
         if (currentDestination == null) return;
-            agent.destination = currentDestination.position;        
+        if (!CheckIfCurrentDestinationIsReached())
+        {
+            agent.destination = currentDestination.position;
+            return;
+        }
+        else
+        {
+            currentDestination = null;
+        }
+                    
     }
 
     public void SetCurrentDestination(string officeSpotName)
     {
-        currentDestination = GameManager.Instance.GetOfficeSpotByName(officeSpotName).Position;
-        CheckIfCurrentDestinationIsReached();
+        currentDestination = GameManager.Instance.GetOfficeSpotByName(officeSpotName).Position;        
     }
 
     public bool CheckIfCurrentDestinationIsReached()
@@ -98,7 +111,35 @@ public class People : MonoBehaviour
 
     public void StartDialogue()
     {
+        // Select the current Game state to pick up the right dialogue JSON file below
+        GameState currentGameState = null;
+
+        if (gameStates != null && gameStates.Count > 0)
+        {
+            Debug.Log("Current Game State as int: " + (int)GameManager.Instance.CurrentGameState);
+            currentGameState = gameStates[(int)GameManager.Instance.CurrentGameState];
+        }
+
+        // Update NPCimage & name to match the right NPC 
         DialogueManager.Instance.ReplaceNPCImage(npcImage);
-        DialogueManager.Instance.EnterDialogueMode(inkJSON, DialoguePosition);
+        DialogueManager.Instance.ReplaceNameText(npcName);
+        
+        // Choos the dialogue based on the current NPC State - ON meaning first contact and valuebale dialogue which effects the score values and game direction based on the player's decicions
+        // OFF - meaning the dialogue after the ON dialogue was made that doesn't effect the game in any way further
+        // DEFAULT - Fallback for special cases where a third dialogue might be needed, ON needs to be = null for this case
+        switch (NPCOnState)
+        {
+            case true:  // ON
+                DialogueManager.Instance.EnterDialogueMode(currentGameState.OninkJSON, DialoguePosition);
+                break;
+            case false: // OFF
+                DialogueManager.Instance.EnterDialogueMode(currentGameState.OffinkJSON, DialoguePosition);
+                break;
+            default:    // BACKUP
+                if(backupInkJSON != null)
+                    DialogueManager.Instance.EnterDialogueMode(backupInkJSON, DialoguePosition);
+                break;
+        }
+
     }
 }

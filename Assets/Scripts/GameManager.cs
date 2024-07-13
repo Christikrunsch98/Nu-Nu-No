@@ -59,21 +59,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Hier kannst du weitere Methoden und Eigenschaften des GameManagers hinzufügen
-    // Methode, um ein OfficeSpot-Objekt anhand des Namens zu finden
-    public OfficeSpot GetOfficeSpotByName(string name)
-    {
-        foreach (OfficeSpot spot in OfficeSpots)
-        {
-            if (spot.Name == name)
-            {
-                return spot;
-            }
-        }
-        return null; // Rückgabe von null, falls kein passender Spot gefunden wurde
-    }
-
-
     /// Game State Vorgaben ///
     /// A - Der Anfang
     /// Nörgler.OfficeSpot -> Küche_Kaffee
@@ -98,25 +83,43 @@ public class GameManager : MonoBehaviour
     /// Spieler -> Büro des Chefs vor dem Schreibtisch des Ches
     /// Chef -> Chefbüro.Chefsessel
     /// Endboss Gespräch langer Dialog, Geistesraum besuche 2 oder so und dann Ende
-    /// 
-    public void ChangeCurrentGameState(GameStateEnum newGameState)
-    {        
-        switch (newGameState)
+    public void ContinueToNextGameState()
+    {
+        // Prepare NPC for next stage
+        foreach (var NPC in NPCs)
         {
-            case GameStateEnum.State0:
-                // Code ...
-                break;
-            case GameStateEnum.State1:
-                // Code ...
-                break;
-            case GameStateEnum.State2:
-                // Code ...
-                break;
-            case GameStateEnum.State3:
-                // Code ...
-                break;
+            NPC.NPCOnState = true;  // Set's On to true, meaning ONinkJSON will be used next            
         }
 
-        CurrentGameState = newGameState;
+        // Change actual CurrentGameState
+        switch (CurrentGameState)
+        {
+            case GameStateEnum.State0:
+                CurrentGameState = GameStateEnum.State1;    // Switch from stage 1 to 2
+                break;
+            case GameStateEnum.State1:
+                CurrentGameState = GameStateEnum.State2;    // Switch from stage 2 to 3
+                break;
+            case GameStateEnum.State2:
+                CurrentGameState = GameStateEnum.State3;     // Switch from stage 3 to 4
+                break;
+            case GameStateEnum.State3:                      // Endgame
+                break;
+            default:
+                break;
+        }
+    }
+
+    // Methode, um ein OfficeSpot-Objekt anhand des Namens zu finden
+    public OfficeSpot GetOfficeSpotByName(string name)
+    {
+        foreach (OfficeSpot spot in OfficeSpots)
+        {
+            if (spot.Name == name)
+            {
+                return spot;
+            }
+        }
+        return null; // Rückgabe von null, falls kein passender Spot gefunden wurde
     }
 }

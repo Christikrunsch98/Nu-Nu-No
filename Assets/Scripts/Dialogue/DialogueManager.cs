@@ -8,18 +8,77 @@ using UnityEngine.UI;
 using TMPro;
 using Ink.Runtime;
 
+[System.Serializable]
+public class DialogueVarbiables
+{
+    public Dictionary<string, Ink.Runtime.Object> InkVariables { get; private set;}    // string = variable name, Ink.Runtime.Object = variable value
+
+    public DialogueVarbiables(TextAsset inkJSON)    // Constructor that stores all variables stored the globals ink file 
+    {
+        Story globalsVariablesStory = new Story(inkJSON.text); 
+        InkVariables = new Dictionary<string, Ink.Runtime.Object>();
+
+        foreach (var name in globalsVariablesStory.variablesState)
+        {
+            Ink.Runtime.Object value = globalsVariablesStory.variablesState.GetVariableWithName(name);
+            InkVariables.Add(name, value);
+            Debug.Log("Initialized global dialogue variable: " + name + " = " + value);
+        }
+    }
+
+    public void StartListening(Story story) // Listens to a change of an ink-Variable
+    {
+        LoadVariablesToStory(story);    // It's important that this method is called before the listener!
+        story.variablesState.variableChangedEvent += VariableChanged;
+    }
+
+    public void StopListening(Story story) // Stops listening to a changes of any ink-Variable
+    {
+        story.variablesState.variableChangedEvent -= VariableChanged;
+    }
+
+    private void VariableChanged(string name, Ink.Runtime.Object value)
+    {
+        //Debug.Log("Varbiable changed: " + name + " = " + value);
+
+        // Only maintain variables that were intialized from the globals ink file
+        if (InkVariables.ContainsKey(name))
+        {
+            InkVariables.Remove(name);
+            InkVariables.Add(name, value);
+        }
+    }
+
+    private void LoadVariablesToStory(Story story)
+    {
+        foreach (KeyValuePair<string, Ink.Runtime.Object> inkVariable in InkVariables)
+        {
+            story.variablesState.SetGlobal(inkVariable.Key, inkVariable.Value);
+        }
+    }
+}
+
+
 public class DialogueManager : MonoBehaviour
 {
+    [Header("Dialogue Variables")]
+    DialogueVarbiables dialogueVarbiables;
+    public TextAsset GlobalsInkJSON;
+
     [Header("Dialogue UI")]
+    [SerializeField] Button continueButton;
     [SerializeField] GameObject dialogueWindow;
     [SerializeField] GameObject dialogueChoices;
     [SerializeField] GameObject dialoguePanel;
     [SerializeField] TextMeshProUGUI dialogueText;
+    [SerializeField] TextMeshProUGUI nameText;
     [SerializeField] Image npcDialogueImage;            // NPC Image
+    ColorBlock referenceColors;     // saves the button colors
+    ColorBlock grayColors;          // saves the grayed out colors
 
     // Lerping Dialogue Height
-    private Vector3 targetPositionA = new Vector3(0, 1.6f, 0);
-    private Vector3 targetPositionB = new Vector3(0, 3.2f, 0);
+    private Vector3 targetPositionA = new Vector3(0, 1.6f, 0);  // Dialogue only
+    private Vector3 targetPositionB = new Vector3(0, 3.2f, 0);  // Dialogue with given choices
     private float lerpTime = 0.3f;
     private float currentLerpTime = 0;
     private bool isLerping = false;
@@ -31,7 +90,7 @@ public class DialogueManager : MonoBehaviour
     public bool DialogueIsPlaying { get; private set; }     // TODO: Freeze Player Movement (Teleport & Left Controller Walk)
 
     [Header("Choices")]
-    [SerializeField] GameObject[] choices;                  // List of UI choices: Choice0, Choice1, Choice2, ...
+    [SerializeField] GameObject[] choiceButtons;                  // List of UI-choice-GameObjects: Choice0, Choice1, Choice2
     private TextMeshProUGUI[] choicesText;                  // Text of button that is a child of each choice
 
     public static DialogueManager Instance { get; private set; }
@@ -43,6 +102,8 @@ public class DialogueManager : MonoBehaviour
             Debug.LogWarning("Found more than one Dialogue Manager in th scene");
         }
         Instance = this;
+
+        dialogueVarbiables = new DialogueVarbiables(GlobalsInkJSON);    // Create Dialogue Variables Object
     }
 
     private void Start()
@@ -52,13 +113,20 @@ public class DialogueManager : MonoBehaviour
         dialoguePanel.SetActive(false);
 
         // get all of the choices text
-        choicesText = new TextMeshProUGUI[choices.Length];
+        choicesText = new TextMeshProUGUI[choiceButtons.Length];
         int index = 0;
-        foreach (GameObject choice in choices)
+        foreach (GameObject choice in choiceButtons)
         {
             choicesText[index] = choice.GetComponentInChildren<TextMeshProUGUI>();
             index++;
         }
+
+        // This is used to show continue button as enabled or diabled | see: DisableContinueButton(); and EnableContinueButton();
+        referenceColors = continueButton.colors;
+        grayColors.normalColor = Color.gray;
+        grayColors.highlightedColor = Color.gray;
+        grayColors.pressedColor = Color.gray;
+        grayColors.selectedColor = Color.gray;
     }
 
     void Update()
@@ -91,16 +159,19 @@ public class DialogueManager : MonoBehaviour
         DialogueIsPlaying = true;
         dialoguePanel.transform.position = dialoguePosition.position;
         dialoguePanel.SetActive(true);
-        
+
+        dialogueVarbiables.StartListening(currentStory);
 
         ContinueStory();
     }
 
     public void ExitDialogueMode()
     {
+        dialogueVarbiables.StopListening(currentStory);
+
         DialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
-        dialogueText.text = "";
+        dialogueText.text = "";        
     }
 
     public void ContinueStory()
@@ -122,20 +193,23 @@ public class DialogueManager : MonoBehaviour
     {
         List<Choice> currentChoices = currentStory.currentChoices; // Choices given in the ink File
 
-        if (currentChoices.Count <= 0)
+        // Adjust the height oft dialogue Window basted on choices being present or not
+        if (currentChoices.Count <= 0)  
         {
             if (dialogueWindow.transform.localPosition != Vector3.zero) StartLerping(targetPositionA);
             dialogueChoices.SetActive(false);
             return;
         }
         else
-        {
+        {            
             StartLerping(targetPositionB);
             dialogueChoices.SetActive(true);
         }
 
-        // definsive check to make sure our UI can support the number of choices coming in
-        if (currentChoices.Count > choices.Length) // Check ink file choices vs in Game Choices UI Elements
+        DisableContinueButton();
+
+        // Definsive check to make sure our UI can support the number of choices coming in
+        if (currentChoices.Count > choiceButtons.Length) // Check ink file choices vs in Game Choices UI Elements
         {
             Debug.LogError("More choices were given then the UI can support. Number of choices given: "
                 + currentChoices.Count);
@@ -145,15 +219,28 @@ public class DialogueManager : MonoBehaviour
         // enable and initialize the coices up to the amount of choices for this line of dialogue
         foreach (Choice choice in currentChoices)
         {
-            choices[index].gameObject.transform.parent.gameObject.SetActive(true);
+            choiceButtons[index].gameObject.transform.parent.gameObject.SetActive(true);
             choicesText[index].text = choice.text;
             index++;
         }
         // go through the remaining choices the UI supports and make sure they're hidden
-        for (int i = index; i < choices.Length; i++)
+        for (int i = index; i < choiceButtons.Length; i++)
         {
-            choices[i].gameObject.transform.parent.gameObject.SetActive(false);
-        }
+            choiceButtons[i].gameObject.transform.parent.gameObject.SetActive(false);
+        }        
+    }
+
+    public void DisableContinueButton()
+    {
+        // This coloring step isn't needed, because the button is grey anyways when interactable is set to false -> But I'm making the gray even darker with my grayColors variable
+        continueButton.colors = grayColors; 
+        continueButton.interactable = false;
+    }
+
+    public void EnableContinueButton()
+    {
+        continueButton.colors = referenceColors;    // Reset Button color
+        continueButton.interactable = true;
     }
 
     public void MakeChoice(int choiceIndex)
@@ -165,5 +252,23 @@ public class DialogueManager : MonoBehaviour
     public void ReplaceNPCImage(Sprite npcImage)
     {
         npcDialogueImage.sprite = npcImage;
+    }
+
+    public void ReplaceNameText(string npcName)
+    {
+        if (npcName == null) return;
+        if (npcName.Length == 0) Debug.LogWarning("NPC name not set.");
+        nameText.text = npcName;
+    }
+
+    public Ink.Runtime.Object GetInkVariableState(string inkVariableName)
+    {
+        Ink.Runtime.Object inkVariableValue = null;
+        dialogueVarbiables.InkVariables.TryGetValue(inkVariableName, out inkVariableValue);
+        if(inkVariableValue == null)
+        {
+            Debug.LogWarning("Ink Variable was found to be null: " + inkVariableName);
+        }
+        return inkVariableValue;
     }
 }

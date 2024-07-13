@@ -6,41 +6,58 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     public InputActionAsset InputActions;
+    public Transform GhostRoomTransform;
+    public Transform OfficeBaseTransform;
 
     private InputAction aButtonAction;
+    private InputAction bButtonAction;
 
     void OnEnable()
     {
-        // Hole die AButton Action aus dem Input Actions Asset
+        // Get Button Action from Input Actions Asset
         aButtonAction = InputActions.FindActionMap("XRI RightHand").FindAction("AButton");
+        bButtonAction = InputActions.FindActionMap("XRI RightHand").FindAction("BButton");
 
-        // Registriere das Event für den A-Knopf
+        // Register Event for Buttons
         aButtonAction.performed += OnAButtonPressed;
         aButtonAction.Enable();
+
+        bButtonAction.performed += OnBButtonPressed;
+        bButtonAction.Enable();
     }
 
     void OnDisable()
     {
-        // Deregistriere das Event für den A-Knopf
+        // De-Register Event for Buttons
         aButtonAction.performed -= OnAButtonPressed;
         aButtonAction.Disable();
+
+        bButtonAction.performed -= OnBButtonPressed;
+        bButtonAction.Disable();
     }
 
     private void OnAButtonPressed(InputAction.CallbackContext context)
     {
-        Debug.Log("A button pressed!");
-
-        // Führe hier deine gewünschte Aktion aus
+        // Get nearest NPC to start the correct conversation
         People NPC = GetNearestNPC();
-        // Aktion ausführen, wenn der A-Knopf gehalten wird
+
+        // Start Dialogue with nearest NPC
         if (NPC != null && !DialogueManager.Instance.DialogueIsPlaying)
         {
             NPC.StartDialogue();
         }
         else
         {
-            Debug.LogWarning("NPC Not added or Dialog Window still open");
+            Debug.LogWarning("NPC might not be added to the GameManager or Dialog Window might be still open!");
         }
+    }
+
+    private void OnBButtonPressed(InputAction.CallbackContext context)
+    {
+        // Teleport Player either to Ghost Room or Office
+        if(Vector3.Distance(transform.position,GhostRoomTransform.position) > 2)  
+            transform.position = GhostRoomTransform.position;
+        else transform.position = OfficeBaseTransform.position;
     }
 
     public People GetNearestNPC()
