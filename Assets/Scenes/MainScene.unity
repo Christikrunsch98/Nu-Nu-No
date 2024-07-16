@@ -3129,7 +3129,9 @@ Transform:
   m_Children:
   - {fileID: 1719763818}
   - {fileID: 78924236}
+  - {fileID: 1104019053}
   - {fileID: 634666174}
+  - {fileID: 1982962082}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &188698926
@@ -6519,6 +6521,7 @@ MonoBehaviour:
   currentDestination: {fileID: 0}
   tolerance: 0.1
   gameStates: []
+  NPCDialogueState: 0
   DialoguePosition: {fileID: 1906848409}
   interactionDistance: 2.5
   visualCue: {fileID: 1719656061}
@@ -11294,6 +11297,7 @@ MonoBehaviour:
       Position: {fileID: 0}
     OninkJSON: {fileID: 4900000, guid: f4f70c472800612469046a49a86741a3, type: 3}
     OffinkJSON: {fileID: 4900000, guid: 7ec61fdc79c690f4ea1cede0c807449d, type: 3}
+  NPCDialogueState: 0
   DialoguePosition: {fileID: 1319813968}
   interactionDistance: 2.75
   visualCue: {fileID: 1144339189}
@@ -17829,6 +17833,10 @@ MonoBehaviour:
     Position: {fileID: 1937034998}
   - Name: office_base
     Position: {fileID: 634666174}
+  - Name: kitchen_tableOne
+    Position: {fileID: 1104019053}
+  - Name: office_print
+    Position: {fileID: 1982962082}
   CurrentGameState: 0
 --- !u!4 &923357986
 Transform:
@@ -19212,6 +19220,7 @@ MonoBehaviour:
   currentDestination: {fileID: 0}
   tolerance: 0.1
   gameStates: []
+  NPCDialogueState: 0
   DialoguePosition: {fileID: 217773703}
   interactionDistance: 2.5
   visualCue: {fileID: 1038198363}
@@ -21219,6 +21228,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1085374340}
   m_CullTransparentMesh: 1
+--- !u!1 &1104019052
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1104019053}
+  m_Layer: 0
+  m_Name: kitchen_tableOne
+  m_TagString: Untagged
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1104019053
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104019052}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.862, y: 0, z: -10.46}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 185345571}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1111652855
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27696,6 +27736,7 @@ MonoBehaviour:
   currentDestination: {fileID: 0}
   tolerance: 0.1
   gameStates: []
+  NPCDialogueState: 0
   DialoguePosition: {fileID: 1934743273}
   interactionDistance: 2.75
   visualCue: {fileID: 1257663091}
@@ -34325,7 +34366,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentDestination: {fileID: 0}
   tolerance: 0.1
-  gameStates: []
+  gameStates:
+  - CurrentGameState: 0
+    OnSpot:
+      Name: kitchen_tableOne
+      Position: {fileID: 1104019053}
+    OffSpot:
+      Name: office_print
+      Position: {fileID: 1982962082}
+    PatrolSpot:
+      Name: 
+      Position: {fileID: 0}
+    OninkJSON: {fileID: 4900000, guid: 9adbc27082b1cf84b84f98553aad02f8, type: 3}
+    OffinkJSON: {fileID: 4900000, guid: b84a9628f66b96446a482ac8ace4cea9, type: 3}
+  NPCDialogueState: 0
   DialoguePosition: {fileID: 1895814694}
   interactionDistance: 2.5
   visualCue: {fileID: 1605509889}
@@ -38710,6 +38764,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d488c7c6d75e60b438b680cc491d97be, type: 3}
   m_PrefabInstance: {fileID: 1979073200}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1982962081
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1982962082}
+  m_Layer: 0
+  m_Name: office_print
+  m_TagString: Untagged
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1982962082
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1982962081}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.356, y: 0, z: -16.672}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 185345571}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1984441458
 GameObject:
   m_ObjectHideFlags: 0
@@ -41707,6 +41792,7 @@ MonoBehaviour:
   currentDestination: {fileID: 0}
   tolerance: 0.1
   gameStates: []
+  NPCDialogueState: 0
   DialoguePosition: {fileID: 1240326529}
   interactionDistance: 2.5
   visualCue: {fileID: 1050669456}
@@ -42242,6 +42328,7 @@ MonoBehaviour:
   currentDestination: {fileID: 0}
   tolerance: 0.1
   gameStates: []
+  NPCDialogueState: 0
   DialoguePosition: {fileID: 902478329}
   interactionDistance: 2.75
   visualCue: {fileID: 1788044207}

@@ -25,18 +25,20 @@ public enum NPCState
 
 public class People : MonoBehaviour
 {
-    // People's state machine
+    // COMING SOON: People's animator state machine
     // Walking
     // Sitting
     // Working
     // Talking
     // Gesturing
+
     [Header("Office Spot")]
     [SerializeField] Transform currentDestination;
     [SerializeField] float tolerance = 0.1f;            // Toleranzwert für das erreichen des Destination Points
     [SerializeField] List<GameState> gameStates;        // Hält den On- & Off-Spot sowie Dialog für den aktuellen GameState
 
     [Header("Interaction")]
+    public CurrentDialogueState NPCDialogueState;
     [SerializeField] Transform DialoguePosition;
     [SerializeField] float interactionDistance = 2.75f;    // Distanz, ab der Interagiert werden kann
     [SerializeField] GameObject visualCue;
@@ -54,8 +56,9 @@ public class People : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
 
-        if (gameStates != null && gameStates.Count > 0) NPCOnState = true;  // use backupJSON when no game state instances exist / are set up in the list
-        else NPCOnState = null;
+        // GameState <=> DialogueState Check up | First dialogue is always OninkJSON
+        if (gameStates != null && gameStates.Count > 0) NPCDialogueState = CurrentDialogueState.On;
+        else NPCDialogueState = CurrentDialogueState.None;
     }
 
     // Update is called once per frame
@@ -67,11 +70,17 @@ public class People : MonoBehaviour
             Interactable = true;
             visualCue.SetActive(true);
         }
+        else if (Interactable && !CheckedPlayerDistance())      // <------------- DIALOGUE CASE 1: BREAK OUT OF DIALOGUE
+        {
+            DialogueManager.Instance.ExitDialogueMode();
+            Interactable = false;
+            return;
+        }
         else
         {
             Interactable = false;
             visualCue.SetActive(false);
-            //DialogueManager.Instance.ExitDialogueMode();
+            
         }
 
         // OfficeSpot: Check if there is a Destination to walk to, if so move to that OfficeSpot Position
@@ -88,6 +97,7 @@ public class People : MonoBehaviour
                     
     }
 
+    // Movement --------------
     public void SetCurrentDestination(string officeSpotName)
     {
         currentDestination = GameManager.Instance.GetOfficeSpotByName(officeSpotName).Position;        
@@ -109,6 +119,7 @@ public class People : MonoBehaviour
         else return true;
     }
 
+    // Dialogue System --------------
     public void StartDialogue()
     {
         // Select the current Game state to pick up the right dialogue JSON file below
@@ -127,19 +138,24 @@ public class People : MonoBehaviour
         // Choos the dialogue based on the current NPC State - ON meaning first contact and valuebale dialogue which effects the score values and game direction based on the player's decicions
         // OFF - meaning the dialogue after the ON dialogue was made that doesn't effect the game in any way further
         // DEFAULT - Fallback for special cases where a third dialogue might be needed, ON needs to be = null for this case
-        switch (NPCOnState)
+        switch (NPCDialogueState)
         {
-            case true:  // ON
-                DialogueManager.Instance.EnterDialogueMode(currentGameState.OninkJSON, DialoguePosition);
+            case CurrentDialogueState.On:  // ON
+                DialogueManager.Instance.EnterDialogueMode(currentGameState.OninkJSON, DialoguePosition, this);
                 break;
-            case false: // OFF
-                DialogueManager.Instance.EnterDialogueMode(currentGameState.OffinkJSON, DialoguePosition);
+            case CurrentDialogueState.Off: // OFF
+                DialogueManager.Instance.EnterDialogueMode(currentGameState.OffinkJSON, DialoguePosition, this);
                 break;
-            default:    // BACKUP
-                if(backupInkJSON != null)
-                    DialogueManager.Instance.EnterDialogueMode(backupInkJSON, DialoguePosition);
+            case CurrentDialogueState.None:
+                if (backupInkJSON != null)
+                    DialogueManager.Instance.EnterDialogueMode(backupInkJSON, DialoguePosition, this);
                 break;
         }
+    }
 
+    public void SwitchDialogueState(CurrentDialogueState currentDialogueState)
+    {
+        NPCDialogueState = currentDialogueState;
+        Debug.Log("NPC Dialogue State now is <" + currentDialogueState.ToString() + ">!");
     }
 }

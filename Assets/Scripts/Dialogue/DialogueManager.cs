@@ -58,6 +58,12 @@ public class DialogueVarbiables
     }
 }
 
+public enum CurrentDialogueState
+{
+    On,
+    Off,
+    None
+}
 
 public class DialogueManager : MonoBehaviour
 {
@@ -129,6 +135,7 @@ public class DialogueManager : MonoBehaviour
         grayColors.selectedColor = Color.gray;
     }
 
+
     void Update()
     {
         if (isLerping)
@@ -153,7 +160,7 @@ public class DialogueManager : MonoBehaviour
         isLerping = true;
     }
 
-    public void EnterDialogueMode(TextAsset inkJSON, Transform dialoguePosition)
+    public void EnterDialogueMode(TextAsset inkJSON, Transform dialoguePosition, People NPC)
     {
         currentStory = new Story(inkJSON.text);
         DialogueIsPlaying = true;
@@ -162,12 +169,30 @@ public class DialogueManager : MonoBehaviour
 
         dialogueVarbiables.StartListening(currentStory);
 
+        currentStory.BindExternalFunction("SwitchDialogueState", (string currentDialogueState) =>
+        {
+            switch (currentDialogueState)
+            {
+                case "Off":
+                    NPC.SwitchDialogueState(CurrentDialogueState.Off);
+                    break;
+                case "On":
+                    NPC.SwitchDialogueState(CurrentDialogueState.On);
+                    break;
+                default:
+                    NPC.SwitchDialogueState(CurrentDialogueState.None);
+                    break;
+            }
+            
+        });
+
         ContinueStory();
     }
 
     public void ExitDialogueMode()
     {
         dialogueVarbiables.StopListening(currentStory);
+        currentStory.UnbindExternalFunction("SwitchDialogueState");
 
         DialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
@@ -178,10 +203,16 @@ public class DialogueManager : MonoBehaviour
     {
         if (currentStory.canContinue)
         {
-            // Set the text for the current dialogue line
-            dialogueText.text = currentStory.Continue();
-            // display choices, if any, for this dialogue line
-            DisplayChoices();
+            string nextLine = currentStory.Continue();
+            if(nextLine.Equals("") && !currentStory.canContinue)
+                ExitDialogueMode();
+            else
+            {
+                // Set the text for the current dialogue line
+                dialogueText.text = nextLine;
+                // display choices, if any, for this dialogue line
+                DisplayChoices();
+            }            
         }
         else
         {
