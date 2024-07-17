@@ -58,6 +58,51 @@ public class DialogueVarbiables
     }
 }
 
+public class InkExternalFunctions
+{
+    public void Bind(Story story, People NPC)
+    {
+        story.BindExternalFunction("SwitchDialogueState", (string currentDialogueState) =>
+        {
+            switch (currentDialogueState)
+            {
+                case "Off":
+                    NPC.SwitchDialogueState(CurrentDialogueState.Off);
+                    NPC.MoveToNextOfficeSpot();
+                    break;
+                case "On":
+                    NPC.SwitchDialogueState(CurrentDialogueState.On);
+                    break;
+                default:
+                    NPC.SwitchDialogueState(CurrentDialogueState.None);
+                    break;
+            }
+
+        });
+
+        story.BindExternalFunction("ContinueToNextGameState", (string gameState) =>
+        {
+            switch (gameState)
+            {
+                case "Next":
+                    GameManager.Instance.ContinueToNextGameState();
+                    Debug.Log("Current Game State = " + GameManager.Instance.CurrentGameState);
+                    break;
+                default:
+                    Debug.LogWarning("GameState change was triggered, but not executed. See what parameter you gave the function in the ink file.");
+                    break;
+            }
+
+        });
+    }
+
+    public void Unbind(Story story)
+    {
+        story.UnbindExternalFunction("SwitchDialogueState");
+        story.UnbindExternalFunction("ContinueToNextGameState");
+    }
+}
+
 public enum CurrentDialogueState
 {
     On,
@@ -92,6 +137,7 @@ public class DialogueManager : MonoBehaviour
     private Vector3 endPosition;
 
     private Story currentStory;
+    private InkExternalFunctions inkExternalFunctions;
     
     public bool DialogueIsPlaying { get; private set; }     // TODO: Freeze Player Movement (Teleport & Left Controller Walk)
 
@@ -110,6 +156,7 @@ public class DialogueManager : MonoBehaviour
         Instance = this;
 
         dialogueVarbiables = new DialogueVarbiables(GlobalsInkJSON);    // Create Dialogue Variables Object
+        inkExternalFunctions = new InkExternalFunctions();              // Exertnal Function for Ink used in Enter and Exit Dialogue Mode
     }
 
     private void Start()
@@ -168,23 +215,7 @@ public class DialogueManager : MonoBehaviour
         dialoguePanel.SetActive(true);
 
         dialogueVarbiables.StartListening(currentStory);
-
-        currentStory.BindExternalFunction("SwitchDialogueState", (string currentDialogueState) =>
-        {
-            switch (currentDialogueState)
-            {
-                case "Off":
-                    NPC.SwitchDialogueState(CurrentDialogueState.Off);
-                    break;
-                case "On":
-                    NPC.SwitchDialogueState(CurrentDialogueState.On);
-                    break;
-                default:
-                    NPC.SwitchDialogueState(CurrentDialogueState.None);
-                    break;
-            }
-            
-        });
+        inkExternalFunctions.Bind(currentStory, NPC);
 
         ContinueStory();
     }
@@ -192,7 +223,7 @@ public class DialogueManager : MonoBehaviour
     public void ExitDialogueMode()
     {
         dialogueVarbiables.StopListening(currentStory);
-        currentStory.UnbindExternalFunction("SwitchDialogueState");
+        inkExternalFunctions.Unbind(currentStory);
 
         DialogueIsPlaying = false;
         dialoguePanel.SetActive(false);

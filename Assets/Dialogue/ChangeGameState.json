@@ -1,0 +1,1 @@
+﻿{"inkVersion":21,"root":[["\n","^Hi, ich bin der GameStateChanger. Ab geht's in die nächste Runde!","\n","ev","str","^Next","/str",{"x()":"ContinueToNextGameState","exArgs":1},"pop","/ev","\n",["done",{"#f":5,"#n":"g-0"}],null],"done",{"global decl":["ev","str","^","/str",{"VAR=":"pokemonName"},"/ev","end",null],"#f":1}],"listDefs":{}}

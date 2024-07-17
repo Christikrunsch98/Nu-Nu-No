@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+/*[System.Serializable]
 public class OfficeSpot
 {
-    public string Name;
     public Transform Position;    
-}
+}*/
 
 public enum GameStateEnum
 {
@@ -21,8 +20,6 @@ public class GameManager : MonoBehaviour
 {
     public Transform Player;
     public List<People> NPCs;
-
-    public List<OfficeSpot> OfficeSpots;
 
     public GameStateEnum CurrentGameState;
 
@@ -88,7 +85,8 @@ public class GameManager : MonoBehaviour
         // Prepare NPC for next stage
         foreach (var NPC in NPCs)
         {
-            NPC.NPCOnState = true;  // Set's On to true, meaning ONinkJSON will be used next            
+            if (NPC.KeepDialogueState) continue;
+            NPC.SwitchDialogueState(CurrentDialogueState.On);  // Set's On to true, meaning ONinkJSON will be used next            
         }
 
         // Change actual CurrentGameState
@@ -101,25 +99,12 @@ public class GameManager : MonoBehaviour
                 CurrentGameState = GameStateEnum.State2;    // Switch from stage 2 to 3
                 break;
             case GameStateEnum.State2:
-                CurrentGameState = GameStateEnum.State3;     // Switch from stage 3 to 4
+                CurrentGameState = GameStateEnum.State3;    // Switch from stage 3 to 4
                 break;
             case GameStateEnum.State3:                      // Endgame
                 break;
             default:
                 break;
         }
-    }
-
-    // Methode, um ein OfficeSpot-Objekt anhand des Namens zu finden
-    public OfficeSpot GetOfficeSpotByName(string name)
-    {
-        foreach (OfficeSpot spot in OfficeSpots)
-        {
-            if (spot.Name == name)
-            {
-                return spot;
-            }
-        }
-        return null; // Rückgabe von null, falls kein passender Spot gefunden wurde
     }
 }

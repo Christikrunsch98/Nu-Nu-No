@@ -7,9 +7,9 @@ using UnityEngine.AI;
 public class GameState
 {
     public GameStateEnum CurrentGameState;
-    public OfficeSpot OnSpot;       // Name & Transform des Spots
-    public OfficeSpot OffSpot;      // Name & Transform des Spots
-    public OfficeSpot PatrolSpot;   // Spot benutzt im Off-State zum Laufen zwischen Off-Spot und diesem
+    public Transform OnSpot;      
+    public Transform OffSpot;     
+    public Transform PatrolSpot;   // evtl. für patroullien benutzt
     public TextAsset OninkJSON;     // Ink file ON : Dialogue
     public TextAsset OffinkJSON;    // Ink file OFF : Dialogue
 }
@@ -47,7 +47,8 @@ public class People : MonoBehaviour
     [SerializeField] string npcName;
 
     [HideInInspector] public bool Interactable;
-    [HideInInspector] public bool? NPCOnState;  // nullable bool for backup json
+    [Tooltip("Check to keep Dialogue State in every Game State")]
+    public bool KeepDialogueState;
 
     private NavMeshAgent agent;
 
@@ -70,9 +71,9 @@ public class People : MonoBehaviour
             Interactable = true;
             visualCue.SetActive(true);
         }
-        else if (Interactable && !CheckedPlayerDistance())      // <------------- DIALOGUE CASE 1: BREAK OUT OF DIALOGUE
+        else if (Interactable && !CheckedPlayerDistance())      // <------------- PLAYER NOT IN RANGE: BREAK OUT OF DIALOGUE
         {
-            DialogueManager.Instance.ExitDialogueMode();
+            //DialogueManager.Instance.ExitDialogueMode();
             Interactable = false;
             return;
         }
@@ -98,9 +99,9 @@ public class People : MonoBehaviour
     }
 
     // Movement --------------
-    public void SetCurrentDestination(string officeSpotName)
+    public void SetCurrentDestination(Transform officeSpot)
     {
-        currentDestination = GameManager.Instance.GetOfficeSpotByName(officeSpotName).Position;        
+        currentDestination = officeSpot;        
     }
 
     public bool CheckIfCurrentDestinationIsReached()
@@ -119,17 +120,19 @@ public class People : MonoBehaviour
         else return true;
     }
 
+    private void SelectCurrentGameState(out GameState currentGameState)
+    {
+        // Select the current Game state to pick up the right dialogue JSON file below
+        currentGameState = null;
+
+        if (gameStates != null && gameStates.Count > 0)
+            currentGameState = gameStates[(int)GameManager.Instance.CurrentGameState];
+    }
+
     // Dialogue System --------------
     public void StartDialogue()
     {
-        // Select the current Game state to pick up the right dialogue JSON file below
-        GameState currentGameState = null;
-
-        if (gameStates != null && gameStates.Count > 0)
-        {
-            Debug.Log("Current Game State as int: " + (int)GameManager.Instance.CurrentGameState);
-            currentGameState = gameStates[(int)GameManager.Instance.CurrentGameState];
-        }
+        SelectCurrentGameState(out GameState currentGameState);
 
         // Update NPCimage & name to match the right NPC 
         DialogueManager.Instance.ReplaceNPCImage(npcImage);
@@ -156,6 +159,31 @@ public class People : MonoBehaviour
     public void SwitchDialogueState(CurrentDialogueState currentDialogueState)
     {
         NPCDialogueState = currentDialogueState;
+
         Debug.Log("NPC Dialogue State now is <" + currentDialogueState.ToString() + ">!");
+    }
+
+    public void MoveToNextOfficeSpot()
+    {
+        // Checks: Only move when a Game State in the List exists otherwise return
+        SelectCurrentGameState(out GameState currentGameState);
+        if (currentGameState == null) return;        
+
+        // Set next Destination when it is set so NPC moves to the location, see Update() Method
+        switch (NPCDialogueState)
+        {
+            case CurrentDialogueState.On:
+                if (currentGameState.OnSpot == null) return;
+                SetCurrentDestination(currentGameState.OnSpot);
+                break;
+            case CurrentDialogueState.Off:
+                if (currentGameState.OffSpot == null) return;
+                SetCurrentDestination(currentGameState.OffSpot);
+                break;
+            case CurrentDialogueState.None:
+                break;
+            default:
+                break;
+        }
     }
 }
