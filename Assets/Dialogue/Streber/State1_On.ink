@@ -12,7 +12,7 @@ Es regnet gerade, merkst du das?
     -> frage
 
 === freude ===
-Ja. Dieser Ton des prasselnden Regens ist ein Segen für die Ohren.
+Ja. Der Ton des prasselnden Regens ist ein Segen für meine Ohren.
 -> end
 
 === frage ===

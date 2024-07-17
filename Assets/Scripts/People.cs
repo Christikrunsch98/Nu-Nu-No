@@ -51,11 +51,13 @@ public class People : MonoBehaviour
     public bool KeepDialogueState;
 
     private NavMeshAgent agent;
+    private Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
 
         // GameState <=> DialogueState Check up | First dialogue is always OninkJSON
         if (gameStates != null && gameStates.Count > 0) NPCDialogueState = CurrentDialogueState.On;
@@ -93,6 +95,7 @@ public class People : MonoBehaviour
         }
         else
         {
+            animator.SetBool("Walk?", false);
             currentDestination = null;
         }
                     
@@ -174,10 +177,12 @@ public class People : MonoBehaviour
         {
             case CurrentDialogueState.On:
                 if (currentGameState.OnSpot == null) return;
+                animator.SetBool("Walk?", true);
                 SetCurrentDestination(currentGameState.OnSpot);
                 break;
             case CurrentDialogueState.Off:
                 if (currentGameState.OffSpot == null) return;
+                animator.SetBool("Walk?", true);
                 SetCurrentDestination(currentGameState.OffSpot);
                 break;
             case CurrentDialogueState.None:
