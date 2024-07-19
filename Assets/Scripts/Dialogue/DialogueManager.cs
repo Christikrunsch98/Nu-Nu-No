@@ -69,13 +69,8 @@ public class InkExternalFunctions
                 case "Off":
                     NPC.SwitchDialogueState(CurrentDialogueState.Off);
                     NPC.MoveToNextOfficeSpot();
-                    break;
-                case "On":
-                    NPC.SwitchDialogueState(CurrentDialogueState.On);
-                    break;
-                default:
-                    NPC.SwitchDialogueState(CurrentDialogueState.None);
-                    break;
+                    break;                
+                // Others may be not needed...
             }
 
         });

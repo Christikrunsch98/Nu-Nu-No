@@ -5,7 +5,9 @@ using UnityEngine;
 /*[System.Serializable]
 public class OfficeSpot
 {
-    public Transform Position;    
+    public Transform Position;
+    public bool Seat;           // sitzen ode nicht sitzen
+    public float LookAngle;     // NPC Rotation while on that spot
 }*/
 
 public enum GameStateEnum
@@ -81,14 +83,7 @@ public class GameManager : MonoBehaviour
     /// Chef -> Chefbüro.Chefsessel
     /// Endboss Gespräch langer Dialog, Geistesraum besuche 2 oder so und dann Ende
     public void ContinueToNextGameState()
-    {
-        // Prepare NPC for next stage
-        foreach (var NPC in NPCs)
-        {
-            if (NPC.KeepDialogueState) continue;
-            NPC.SwitchDialogueState(CurrentDialogueState.On);  // Set's On to true, meaning ONinkJSON will be used next            
-        }
-
+    {       
         // Change actual CurrentGameState
         switch (CurrentGameState)
         {
@@ -105,6 +100,14 @@ public class GameManager : MonoBehaviour
                 break;
             default:
                 break;
+        }
+
+        // Reset NPC Dialoge States
+        foreach (var NPC in NPCs)
+        {
+            if (NPC.KeepDialogueState) continue;
+            NPC.SwitchDialogueState(CurrentDialogueState.On);  // Set's On to true, meaning ONinkJSON will be used next            
+            NPC.MoveToNextOfficeSpot();
         }
     }
 }
