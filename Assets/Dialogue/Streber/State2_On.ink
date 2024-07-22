@@ -6,16 +6,18 @@ Hey, weißt du wie dieser Drucker funktioniert?
 -> main
 
 === main ===
-* [Brauchst du Hilfe?]
+* [Brauchst du Hilfe?]  #rep:-1
     -> ja
-* [Nein, wie denn?]
+* [Nein, wie denn?]     #rep:1
     -> nein
 
 === ja ===
+ #score:-1
 Nein nein mein Freund. Ich komme klar.
 -> end
 
 === nein ===
+ #score:1
 Eine kleine Drüse platzier Tropfen für Tropfen feinste Tinte auf das Blatt.
 -> end
 

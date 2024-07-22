@@ -50,7 +50,8 @@ public class People : MonoBehaviour
     [SerializeField] GameObject visualCue;
     [SerializeField] TextAsset backupInkJSON;
     [SerializeField] Sprite npcImage;
-    [SerializeField] string npcName;
+    public string NPCName;
+    [HideInInspector] public int Rep = 10;                    // How the players reputation is on this NPC
 
     [HideInInspector] public bool Interactable;
     [Tooltip("Check to keep Dialogue State in every Game State")]
@@ -134,7 +135,7 @@ public class People : MonoBehaviour
         currentGameState = null;
 
         // Error Warning (Just a Dev reminder)
-        if (gameStates.Count > 0 && gameStates.Count <= (int)GetLastEnumValue<GameStateEnum>()) Debug.LogError("The NPC [" + npcName + "] has faulty gameStates list. The list should possess out of as many elements as there are Game States.");
+        if (gameStates.Count > 0 && gameStates.Count <= (int)GetLastEnumValue<GameStateEnum>()) Debug.LogError("The NPC [" + NPCName + "] has faulty gameStates list. The list should possess out of as many elements as there are Game States.");
         
         if (gameStates != null && gameStates.Count > 0 && !(gameStates.Count <= (int)GetLastEnumValue<GameStateEnum>()))  
         currentGameState = gameStates[(int)GameManager.Instance.CurrentGameState];
@@ -290,7 +291,7 @@ public class People : MonoBehaviour
 
         // Update NPCimage & name to match the right NPC 
         DialogueManager.Instance.ReplaceNPCImage(npcImage);
-        DialogueManager.Instance.ReplaceNameText(npcName);
+        DialogueManager.Instance.ReplaceNameText(NPCName);
         
         // Choos the dialogue based on the current NPC State - ON meaning first contact and valuebale dialogue which effects the score values and game direction based on the player's decicions
         // OFF - meaning the dialogue after the ON dialogue was made that doesn't effect the game in any way further

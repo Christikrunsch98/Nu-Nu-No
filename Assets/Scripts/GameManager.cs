@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 /*[System.Serializable]
 public class OfficeSpot
@@ -22,6 +23,8 @@ public class GameManager : MonoBehaviour
 {
     public Transform Player;
     public List<People> NPCs;
+    public TextMeshProUGUI RageText;
+    public int Rage;
 
     public GameStateEnum CurrentGameState;
 
@@ -56,6 +59,18 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        Rage = 0;
+        RageText.text = "0";
+    }
+
+    public void AddRage(int add)
+    {
+        Rage += add;
+        RageText.text = Rage.ToString();
     }
 
     /// Game State Vorgaben ///

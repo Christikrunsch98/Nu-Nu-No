@@ -6,17 +6,17 @@ Weißt du, am liebsten gehe ich am Wochenende fischen.
 -> main
 
 === main ===
-* [Oh wie schön!]
+* [Oh wie schön!]   #rep:1
     -> freude
-* [Wirklich?]
+* [Wirklich?]       #rep:-1
     -> frage
 
 === freude ===
-Ja. Die Natur ist bezaubernd am See.
+Ja. Die Natur ist bezaubernd am See.    #score:1
 -> end
 
 === frage ===
-Ja tatsächlich, es entspannt mich sehr.
+Ja tatsächlich, es entspannt mich sehr. #score:-1
 -> end
 
 === end ===

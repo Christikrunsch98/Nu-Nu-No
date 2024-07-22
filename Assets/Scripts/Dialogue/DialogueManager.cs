@@ -107,9 +107,17 @@ public enum CurrentDialogueState
 
 public class DialogueManager : MonoBehaviour
 {
-    [Header("Dialogue Variables")]
-    DialogueVarbiables dialogueVarbiables;
+    [Header("Dialogue Variables")]    
     public TextAsset GlobalsInkJSON;
+
+    // Ink variables
+    private Story currentStory;
+    private DialogueVarbiables dialogueVarbiables;
+    private InkExternalFunctions inkExternalFunctions;
+    private const string REPUTATION_TAG = "rep";
+    private const string RAGE_TAG = "rage";
+    private People currentNPC;
+
 
     [Header("Dialogue UI")]
     [SerializeField] Button continueButton;
@@ -118,7 +126,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] GameObject dialoguePanel;
     [SerializeField] TextMeshProUGUI dialogueText;
     [SerializeField] TextMeshProUGUI nameText;
-    [SerializeField] Image npcDialogueImage;            // NPC Image
+    [SerializeField] Image npcDialogueImage;            
     ColorBlock referenceColors;     // saves the button colors
     ColorBlock grayColors;          // saves the grayed out colors
 
@@ -130,9 +138,6 @@ public class DialogueManager : MonoBehaviour
     private bool isLerping = false;
     private Vector3 startPosition;
     private Vector3 endPosition;
-
-    private Story currentStory;
-    private InkExternalFunctions inkExternalFunctions;
     
     public bool DialogueIsPlaying { get; private set; }     // TODO: Freeze Player Movement (Teleport & Left Controller Walk)
 
@@ -205,12 +210,16 @@ public class DialogueManager : MonoBehaviour
     public void EnterDialogueMode(TextAsset inkJSON, Transform dialoguePosition, People NPC)
     {
         currentStory = new Story(inkJSON.text);
+        currentNPC = NPC;
         DialogueIsPlaying = true;
         dialoguePanel.transform.position = dialoguePosition.position;
         dialoguePanel.SetActive(true);
 
+        // Handle External Ink Functions
         dialogueVarbiables.StartListening(currentStory);
         inkExternalFunctions.Bind(currentStory, NPC);
+
+        // Handle Ink Tags
 
         ContinueStory();
     }
@@ -229,21 +238,72 @@ public class DialogueManager : MonoBehaviour
     {
         if (currentStory.canContinue)
         {
-            string nextLine = currentStory.Continue();
-            if(nextLine.Equals("") && !currentStory.canContinue)
+            string nextLine = currentStory.Continue();  
+
+            // If the nextLine is nothing and we can't continue (so the dialogue is over) quit the Dialogue Mode
+            if (nextLine.Equals("") && !currentStory.canContinue)
                 ExitDialogueMode();
-            else
+
+            // If the nextLine is empty we very likely found a tag so we give nextLine the story line after that
+            if (nextLine.Trim().Equals(""))
             {
-                // Set the text for the current dialogue line
-                dialogueText.text = nextLine;
-                // display choices, if any, for this dialogue line
-                DisplayChoices();
-            }            
+                HandleTags(currentStory.currentTags);
+                nextLine = currentStory.Continue();
+            }                
+
+            // Set the text for the current dialogue line
+            dialogueText.text = nextLine;
+
+            // display choices, if any, for this dialogue line
+            DisplayChoices();
+            HandleTags(currentStory.currentTags);
         }
         else
         {
             ExitDialogueMode();
         }
+    }
+
+    private void HandleTags(List<string> currentTags)
+    {
+        foreach (string tag in currentTags)
+        {
+            // Parse the tag into <key, value> pair
+            string[] splitTag = tag.Split(':');
+
+            if(splitTag.Length != 2)
+            {
+                Debug.LogError("Tag could not be appropriately parsed " + tag);
+            }
+            
+            string tagKey = splitTag[0].Trim();
+            string tagValue = splitTag[1].Trim();
+
+            Debug.Log("Found Tag on NPC " + currentNPC.NPCName + " -> " + tagKey + ":" + tagValue);
+
+            if (!TryConvertStringToInt(tagValue, out int result))
+                Debug.LogWarning("Tag value of " + tagValue + " could not be convertend into an integer");
+
+            // Handle the tag
+            switch (tagKey)
+            {
+                case REPUTATION_TAG:
+                        currentNPC.Rep += result;
+                    Debug.Log("The NPC " + currentNPC.NPCName + " is know in this mood towards the player: " + currentNPC.Rep);
+                    break;
+                case RAGE_TAG:
+                    GameManager.Instance.AddRage(result);
+                    break;
+                default:
+                    Debug.LogWarning("Tag came in but is not currently being handled: " + tag);
+                    break;
+            }
+        }
+    }
+
+    private bool TryConvertStringToInt(string input, out int result)
+    {
+        return int.TryParse(input, out result);
     }
 
     private void DisplayChoices()
@@ -314,7 +374,7 @@ public class DialogueManager : MonoBehaviour
     public void ReplaceNameText(string npcName)
     {
         if (npcName == null) return;
-        if (npcName.Length == 0) Debug.LogWarning("NPC name not set.");
+        if (npcName.Length == 0) Debug.LogWarning("NPC name not set on [" + this.gameObject.name + "].");
         nameText.text = npcName;
     }
 
