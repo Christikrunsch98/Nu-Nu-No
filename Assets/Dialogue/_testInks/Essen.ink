@@ -10,7 +10,7 @@ Was würdest du am liebsten Essen?
         -> snack
     *[Eine große Pizza!]#rage:0 #rep:3
         -> pizza
-    *[Ein riesen Smoothie!]#rage:1 #rep:-1
+    *[Ein riesen Smoothie!]#rage:-2 #rep:-1
         -> smoothie
     
 === snack ===

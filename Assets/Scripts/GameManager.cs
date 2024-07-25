@@ -69,8 +69,16 @@ public class GameManager : MonoBehaviour
 
     public void AddRage(int add)
     {
-        Rage += add;
+        if ((Rage + add) > 10) Rage = 10;  // Clip to 10 max <-- Enter Ghost Room ???
+
+        else if ((Rage + add) < 0) Rage = 0; // Clip to 0 min 
+
+        else Rage += add;   // just add number
+
+        // Set UI Text & Player Heart Beat Effect Strength
         RageText.text = Rage.ToString();
+        Player.gameObject.GetComponent<Player>().SetRageEffect(Rage);
+
     }
 
     /// Game State Vorgaben ///

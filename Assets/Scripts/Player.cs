@@ -12,11 +12,12 @@ public class Player : MonoBehaviour
     private InputAction aButtonAction;
     private InputAction bButtonAction;
 
-    [Header("Geisterraum")]
+    [Header("Ghost Room")]
     public Transform GhostRoomTransform;
     public Transform OfficeBaseTransform;
+
+    [Header("Visual Effects")]
     public Volume PlayerVolumeEffects;
-    public float duration = 1.25f;
 
     private Bloom bloom;
     private float elapsedTime = 0f;
@@ -24,6 +25,15 @@ public class Player : MonoBehaviour
     private float targetThreshold = 0f;
     private float initialIntensity = 0f;
     private float targetIntensity = 70f;
+
+    public ScriptableRendererFeature FullScreenHeartBeat;
+    public Material HeartBeatMaterial;
+    public GameObject HeartBeatSound;
+    public float duration = 1.25f;
+
+    private AudioSource heartBeatAudioSource;    
+    private int voronoiIntensityID = Shader.PropertyToID("_VoronoiIntensity");
+   
 
     private void Start()
     {
@@ -35,6 +45,8 @@ public class Player : MonoBehaviour
         }
         else Debug.LogError("Bloom effect not found in the Volume profile.");
 
+        FullScreenHeartBeat.SetActive(false);
+        heartBeatAudioSource = HeartBeatSound.GetComponent<AudioSource>();
     }
 
     void OnEnable()
@@ -99,6 +111,7 @@ public class Player : MonoBehaviour
         }            
     }
 
+    // VISUAL EFFECTS vvv ---------------------------------------------------------
     public void ModifyVolumeProfile()
     {
         StartCoroutine(ChangeBloomEffect());
@@ -135,6 +148,59 @@ public class Player : MonoBehaviour
         bloom.threshold.value = endThreshold;
         bloom.intensity.value = endIntensity;
     }
+
+    public void SetRageEffect(int rage)
+    {
+        // Recognize addition
+        if (rage > 4)
+        {
+            // Map the rage from 0 - 10 to 0 - 2 to fit the Intensity Slider in the Shader
+            float mappedRage = Mathf.Lerp(0f, 2f, (rage - 4f) / 6f);
+            float mappedVolume = Mathf.Lerp(0f, 1f, (rage - 4f) / 6f);
+
+            EnableOrDisableHeartBeat(true);
+            StartCoroutine(HeartBeatShader(mappedRage, mappedVolume));
+        }
+
+        // Recognize subtraction
+        if (rage <= 4)
+        {
+            StartCoroutine(HeartBeatShader(0, 0));
+        }
+    }
+
+    private void EnableOrDisableHeartBeat(bool on)
+    {
+        HeartBeatSound.SetActive(on);
+        FullScreenHeartBeat.SetActive(on);
+    }
+
+    private IEnumerator HeartBeatShader(float targetIntensity, float targetVolume)
+    {       
+        // Der Startwert ist der aktuelle Wert
+        float startIntensity = HeartBeatMaterial.GetFloat(voronoiIntensityID);
+        float currentVoronoiIntensity;
+        float startVolume = heartBeatAudioSource.volume;
+        float currentVolume;
+
+        float elapsedTime = 0.0f;
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            currentVoronoiIntensity = Mathf.Lerp(startIntensity, targetIntensity, (elapsedTime / duration));
+            HeartBeatMaterial.SetFloat(voronoiIntensityID,currentVoronoiIntensity);
+
+            currentVolume = Mathf.Lerp(startVolume, targetVolume, (elapsedTime / duration));
+            heartBeatAudioSource.volume = currentVolume;
+
+            yield return null;
+        }
+
+        if (heartBeatAudioSource.volume <= 0f) EnableOrDisableHeartBeat(false);
+    }
+
+    // FUNCTIONAL METHODS vvv --------------------------------------------------
 
     public People GetNearestNPC()
     {
