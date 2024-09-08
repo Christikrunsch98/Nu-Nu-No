@@ -2,23 +2,23 @@ INCLUDE ..\globals.ink
 
 // Streber: State 2 : ON
 
-Hey, weißt du wie dieser Drucker funktioniert?
+Es regnet gerade, merkst du das?
 -> main
 
 === main ===
-* [Brauchst du Hilfe?]  #rep:-1
-    -> ja
-* [Nein, wie denn?]     #rep:1
-    -> nein
+* [Ja, sehr beruhigend] #rep:1
+    -> freude
+* [Wirklich?]           #rep:-1
+    -> frage
 
-=== ja ===
- #score:-1
-Nein nein mein Freund. Ich komme klar.
+=== freude ===
+ #score:1
+Ja. Der Ton des prasselnden Regens ist ein Segen für meine Ohren.
 -> end
 
-=== nein ===
- #score:1
-Eine kleine Drüse platzier Tropfen für Tropfen feinste Tinte auf das Blatt.
+=== frage ===
+ #score:-1
+Ja, lausche mein Freund. Kannst du es hören?
 -> end
 
 === end ===

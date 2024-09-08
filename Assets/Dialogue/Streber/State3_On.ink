@@ -2,27 +2,20 @@ INCLUDE ..\globals.ink
 
 // Streber: State 3 : ON
 
-Hey! Weißt du wo mein Sandwich ist!?
--> main
+Weißt du was mir an diesem Arbeitsort so gefällt?
+*[Nein, was denn?]
+    ->antwort
+*[Nein, sag schon!]
+    ->antwort
 
-=== main ===
-* [Beruhig Dich!]   #rep:-2
-    -> A
-* [In der Küche?]   #rep:2
-    -> B
+=== antwort ===
+Ganz einfach! Das Holzdach!
 
-=== A ===
- #score:-2
-NEIN! Ohne mein Sandwich geht gar nicht! Ich kann so niemals arbeiten!
--> end
+Jeden Tag auf's Neue scheint die Sonne durch die schrägen Scheiben hindurch.
 
-=== B ===
- #score:2
-OMG! DU GENIE! Ich werde direkt mal nachschauen!
--> end
+Und wenn es Regnet prasselt der Regen daran ab.
 
-=== end ===
-Bis bald!
-// C# -> People.DialogueState = CurrentDialogueState.Off;
-~ SwitchDialogueState("Off")
+Und jeder Holzbalken hat seine ganz eigene Herkunft und Geschichte.
+
+Es ist einfach einzigartig!
 -> DONE

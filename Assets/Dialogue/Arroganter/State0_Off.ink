@@ -2,4 +2,4 @@ INCLUDE ..\globals.ink
 
 // Arroganter: State 0 : OFF
 
-Danke für das nette Gespräch.
+Arroganz ist die Kunst auf seine eigene Dummheit stolz zu sein.

@@ -2,4 +2,6 @@ INCLUDE ..\globals.ink
 
 // Streber: State 1 : OFF
 
-Ich liebe Regen.
+Mach es wie der Frosch. Spring mit Leichtigkeit über die kleinen Hindernisse des Lebens!
+
+Bis bald mein Freund!

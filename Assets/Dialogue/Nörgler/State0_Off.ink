@@ -2,4 +2,4 @@ INCLUDE ..\globals.ink
 
 // Nörgler: State 0 : OFF
 
-Danke für das nette Gespräch.
+Machst du's für die Kunst oder für die Kohle?

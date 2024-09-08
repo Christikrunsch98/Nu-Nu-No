@@ -153,6 +153,7 @@ public class People : MonoBehaviour
     // Movement ---------------------------------------
     public void SetCurrentDestination(Transform officeSpot)
     {
+        animator.SetBool("Walk?", true);
         currentDestination = officeSpot;        
     }
 
@@ -287,7 +288,7 @@ public class People : MonoBehaviour
     public void StartDialogue()
     {
         if (!SelectCurrentGameState(out GameState currentGameState) && NPCDialogueState != CurrentDialogueState.None)
-            Debug.LogWarning("[Developer, People.cs] Select Mode NONE or insert GameStates to the list.");
+            Debug.LogWarning("[Developer, People.cs] Select Dialogue Mode NONE or insert GameStates to the list.");
 
         // Update NPCimage & name to match the right NPC 
         DialogueManager.Instance.ReplaceNPCImage(npcImage);
@@ -333,7 +334,7 @@ public class People : MonoBehaviour
                     if (gameStates[(int)currentGameState.CurrentGameState - 1].OffSpot == gameStates[(int)currentGameState.CurrentGameState].OnSpot) return;
 
                 StopTimer();
-                animator.SetBool("Walk?", true);
+                /*animator.SetBool("Walk?", true);*/
                 SetCurrentDestination(currentGameState.OnSpot.transform); // Walking
                 break;
             case CurrentDialogueState.Off:
@@ -341,7 +342,7 @@ public class People : MonoBehaviour
                 if (currentGameState.OffSpot == currentGameState.OnSpot) return;    // Don't set current destination in the first place if its the same as before
 
                 StopTimer();
-                animator.SetBool("Walk?", true);
+                /*animator.SetBool("Walk?", true);*/
                 SetCurrentDestination(currentGameState.OffSpot.transform); // Walking
                 break;
         }

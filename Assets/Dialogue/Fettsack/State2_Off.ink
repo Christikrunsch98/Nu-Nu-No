@@ -2,4 +2,4 @@ INCLUDE ..\globals.ink
 
 // Fettsack: State 2 : OFF
 
--> DONE
+Mein Magen ruft auch schon wieder nach Essen! Haha!

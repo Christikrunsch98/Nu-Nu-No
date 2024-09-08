@@ -1,5 +1,24 @@
 INCLUDE ..\globals.ink
 
 // Nörgler: State 2 : ON
+Warum wird hier nie auf meine Meinung gehört?!
+
+
+*[Vielleicht solltes du deine Lautstärke etwas anpassen?]
+    ->antwort1
+    
+*[Vielleicht solltest du mal ne neue Schallplatte aufsetzen?]
+    ->antwort2
+    
+* [Unser orangener frecher Freund da drüben hat sich Chickenwings bestellt, vlt. gibt er dir welche ab.]
+    Oh wirklich?! Das könnte meine Rettung sein. Zep Zep
+
+===antwort1===
+Ich glaub nicht... Meinst du? SOLL ICH NOCH LAUTER REDEN?!
+
+-> DONE
+
+===antwort2===
+Stimmt du hast recht! Nächstes Mal leg ich noch eins drauf! Zep Zep!
 
 -> DONE

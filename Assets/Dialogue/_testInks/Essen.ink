@@ -1,7 +1,7 @@
 Hey Hey mein Freund! Wie geht's?
 
 Wie wäre es mit einem Snack, wähle eine Option.
-->main
+->maine
 
 === main ===
 Was würdest du am liebsten Essen?

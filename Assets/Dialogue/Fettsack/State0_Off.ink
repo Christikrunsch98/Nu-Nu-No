@@ -2,4 +2,4 @@ INCLUDE ..\globals.ink
 
 // Fettsack: State 0 : OFF
 
-Danke für das nette Gespräch.
+Mein Magen ruft auch schon wieder nach Essen! Haha!

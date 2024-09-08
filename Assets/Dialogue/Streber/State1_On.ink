@@ -2,27 +2,22 @@ INCLUDE ..\globals.ink
 
 // Streber: State 1 : ON
 
-Es regnet gerade, merkst du das?
+Wusstest du, dass es eine effiziente Methode gibt, um Frösche von einer Heizung zu unterscheiden?
 -> main
 
 === main ===
-* [Ja, sehr beruhigend] #rep:1
-    -> freude
-* [Wirklich?]           #rep:-1
-    -> frage
+* [Äh, okay... Hast du heute Morgen genug Kaffee getrunken?] 
+    -> antwort
+* [Äh, okay... Hast du das auf dem Weg zum Mars gelernt?]          
+    -> antwort
 
-=== freude ===
+=== antwort ===
  #score:1
-Ja. Der Ton des prasselnden Regens ist ein Segen für meine Ohren.
--> end
-
-=== frage ===
- #score:-1
-Ja, lausche mein Freund. Kannst du es hören?
+Nein, weißt du's nicht? Frösche hüpfen weg, wenn sie heiß werden!
 -> end
 
 === end ===
-Bis bald!
+Bis bald! Haha!
 // C# -> People.DialogueState = CurrentDialogueState.Off;
-~ SwitchDialogueState("Off")
+
 -> DONE
