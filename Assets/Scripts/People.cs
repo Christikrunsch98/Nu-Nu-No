@@ -8,6 +8,7 @@ using UnityEngine.AI;
 public class GameState
 {
     public GameStateEnum CurrentGameState;
+    public bool PresentInThisGameState;
     public OfficeSpot OnSpot;      
     public OfficeSpot OffSpot;     
     public TextAsset OninkJSON;     // Ink file ON : Dialogue
@@ -149,6 +150,25 @@ public class People : MonoBehaviour
         Array values = Enum.GetValues(typeof(T));
         return (T)values.GetValue(values.Length - 1);
     }
+
+    public void SetupNPCForThisGameState()
+    {
+        if (this.gameObject.activeSelf == false) return;
+
+        // If no GameState is listed return
+        if (!SelectCurrentGameState(out GameState currentGameState)) return;
+
+        if (currentGameState.PresentInThisGameState)
+        {
+            this.gameObject.SetActive(currentGameState.PresentInThisGameState);
+            TeleportToOnOfficeSpot();
+        }
+        else
+        {
+            this.gameObject.SetActive(currentGameState.PresentInThisGameState);
+        }        
+    }
+
 
     // Movement ---------------------------------------
     public void SetCurrentDestination(Transform officeSpot)
@@ -346,5 +366,17 @@ public class People : MonoBehaviour
                 SetCurrentDestination(currentGameState.OffSpot.transform); // Walking
                 break;
         }
+    }
+
+    public void TeleportToOnOfficeSpot()
+    {
+        // Checks: Only move when a Game State in the List exists otherwise return
+        if (!SelectCurrentGameState(out GameState currentGameState)) return;
+        
+        // if there is no OnSpot specified to teleport to or if the NPC is in the Off or None Mode return
+        if (currentGameState.OnSpot == null || NPCDialogueState != CurrentDialogueState.On) return;
+
+        // Teleportation
+        transform.position = currentGameState.OnSpot.transform.position;
     }
 }

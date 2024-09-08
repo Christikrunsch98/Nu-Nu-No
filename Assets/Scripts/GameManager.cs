@@ -25,6 +25,10 @@ public class GameManager : MonoBehaviour
     public List<People> NPCs;
     public TextMeshProUGUI RageText;
     public int Rage;
+    public RuntimeAnimatorController NörglerAnimator1;
+    public RuntimeAnimatorController NörglerAnimator2;
+
+    public Transform OfficeStartSpot;
 
     public GameStateEnum CurrentGameState;
 
@@ -63,8 +67,11 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        // Rage Score
         Rage = 0;
         RageText.text = "0";
+
+        SetupGameState();
     }
 
     public void AddRage(int add)
@@ -79,6 +86,14 @@ public class GameManager : MonoBehaviour
         RageText.text = Rage.ToString();
         Player.gameObject.GetComponent<Player>().SetRageEffect(Rage);
 
+    }
+
+    public void SetupGameState()
+    {
+        foreach (var NPC in NPCs)
+        {
+            NPC.SetupNPCForThisGameState();
+        }
     }
 
     /// Game State Vorgaben ///
@@ -130,7 +145,7 @@ public class GameManager : MonoBehaviour
         {
             if (NPC.KeepDialogueState) continue;
             NPC.SwitchDialogueState(CurrentDialogueState.On);  // Set's On to true, meaning ONinkJSON will be used next            
-            NPC.MoveToNextOfficeSpot();
+            NPC.SetupNPCForThisGameState();
         }
     }
 }

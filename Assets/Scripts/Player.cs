@@ -92,11 +92,20 @@ public class Player : MonoBehaviour
     private void OnBButtonPressed(InputAction.CallbackContext context)
     {
         // Teleport Player either to Ghost Room or Office
-        ModifyVolumeProfile();
+        ModifyVolumeProfile(false);
     }
 
-    private void TeleportPlayer()
+    private void TeleportPlayer(bool gameStart)
     {
+        // On Main Menu -> Start Game teleport Player into the Office
+        if (gameStart)   
+        {
+            transform.position = GameManager.Instance.OfficeStartSpot.position;
+            gameStart = false;
+            return;
+        }
+
+        // On Ingame Teleport -> To Ghostroom and back to office
         if (Vector3.Distance(transform.position, GhostRoomTransform.position) > 2)
         {
             transform.position = GhostRoomTransform.position;
@@ -112,17 +121,17 @@ public class Player : MonoBehaviour
     }
 
     // VISUAL EFFECTS vvv ---------------------------------------------------------
-    public void ModifyVolumeProfile()
+    public void ModifyVolumeProfile(bool gameStart)
     {
-        StartCoroutine(ChangeBloomEffect());
+        StartCoroutine(ChangeBloomEffect(gameStart));
     }
 
-    IEnumerator ChangeBloomEffect()
+    IEnumerator ChangeBloomEffect(bool gameStart)
     {
         // Change from initial to target values
         yield return ChangeBloom(initialThreshold, targetThreshold, initialIntensity, targetIntensity);
 
-        TeleportPlayer();        
+        TeleportPlayer(gameStart);        
 
         // Change from target values back to initial values
         yield return ChangeBloom(targetThreshold, initialThreshold, targetIntensity, initialIntensity);
