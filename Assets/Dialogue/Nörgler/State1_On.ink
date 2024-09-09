@@ -14,12 +14,15 @@ Das ist doch wieder typisch, dass du nicht an die Unterlagen gedacht hast.
 
 ===antwort1===
 Ja, sagen kannst du viel.
--> DONE
 
+-> DONE
+~ SwitchDialogueState("Off")
 ===antwort2===
 Wie bitte?
+~ SwitchDialogueState("Off")
 -> DONE
 
 ===antwort3===
 Ohh. Ah schön
+~ SwitchDialogueState("Off")
 -> DONE

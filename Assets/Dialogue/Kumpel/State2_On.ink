@@ -14,12 +14,15 @@ Na das Meeting lief ja gut! Ich bin mir sicher alle werden heute einen richtig e
 
 === antwort0 ===
 Jeder Tag ist ein Chance, neu und frisch zu starten!
+~ SwitchDialogueState("Off")
 -> DONE
 
 === antwort1 ===
 Haha! Na klar!
+~ SwitchDialogueState("Off")
 -> DONE
 
 === antwort2 ===
 Hach mein Freund, das passt schon! Nicht verzagen, lass dir von keinem den Tag verderben!
+~ SwitchDialogueState("Off")
 -> DONE

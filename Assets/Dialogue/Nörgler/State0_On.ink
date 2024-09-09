@@ -4,15 +4,17 @@ INCLUDE ..\globals.ink
 Es ist ja immer dasselbe hier... Schon wieder ist mein Mittagessen verschimmelt
 * [Vielleicht solltest du dein Lunchbox öfter wechseln]
 -> antwort0
-* [Das ist wirklich ärgerlich. Hast du versucht, es als neuen Superfood-Trend zu verkaufen?]
+* [Hast du versucht, es als neuen Superfood-Trend zu verkaufen?]
 ->antwort1
 
 
 ===antwort0===
 Mama hat das früher auch immer zu mir gesagt. Hmm... vielleicht ist ja was dran.
+~ SwitchDialogueState("Off")
 -> DONE
 
 ===antwort1===
 Das ist nicht lustig. Ich mag keinen Schimmel auf meinem Essen!"
+~ SwitchDialogueState("Off")
 -> DONE
 

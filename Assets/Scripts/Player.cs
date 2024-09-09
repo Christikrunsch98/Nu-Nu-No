@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
     private float targetThreshold = 0f;
     private float initialIntensity = 0f;
     private float targetIntensity = 70f;
+    private bool enableBButton;
 
     public ScriptableRendererFeature FullScreenHeartBeat;
     public Material HeartBeatMaterial;
@@ -73,6 +74,9 @@ public class Player : MonoBehaviour
         bButtonAction.Disable();
     }
 
+
+
+    // ### INPUT HANDLING ### --- ### --- ### --- ### --- ###
     private void OnAButtonPressed(InputAction.CallbackContext context)
     {
         // Get nearest NPC to start the correct conversation
@@ -88,11 +92,36 @@ public class Player : MonoBehaviour
             Debug.LogWarning("NPC might not be added to the GameManager or Dialog Window might be still open!");
         }
     }
-
+    
     private void OnBButtonPressed(InputAction.CallbackContext context)
     {
         // Teleport Player either to Ghost Room or Office
-        ModifyVolumeProfile(false);
+        if(enableBButton)
+            EnterGhostroom();
+    }
+
+    public void EnableBButton(bool on)
+    {
+        enableBButton = on;
+    }
+
+    void EnterGhostroom()
+    {
+        GameManager.Instance.ResetRage();
+
+        // Disable this effect
+        StartCoroutine(HeartBeatShader(0, 0));
+
+        // Teleport to ghost room
+        StartTeleportion(false);
+    }
+
+
+
+    // ### TELEPORTATION HANDLING ### --- ### --- ### --- ### --- ###
+    public void StartTeleportion(bool gameStart) // Ausführen zum Game Start und zum Teleportieren von und zum Geisterraum
+    {
+        StartCoroutine(ChangeBloomEffect(gameStart));
     }
 
     private void TeleportPlayer(bool gameStart)
@@ -100,30 +129,28 @@ public class Player : MonoBehaviour
         // On Main Menu -> Start Game teleport Player into the Office
         if (gameStart)   
         {
+            DialogueManager.Instance.ExitDialogueMode();
             transform.position = GameManager.Instance.OfficeStartSpot.position;
-            gameStart = false;
             return;
         }
 
         // On Ingame Teleport -> To Ghostroom and back to office
         if (Vector3.Distance(transform.position, GhostRoomTransform.position) > 2)
         {
+            DialogueManager.Instance.ExitDialogueMode();
+            EnableBButton(false);
             transform.position = GhostRoomTransform.position;
             if (PlayerVolumeEffects.profile.TryGet<ChromaticAberration>(out ChromaticAberration chromaticAberration))
                 chromaticAberration.intensity.Override(1f);
         }
         else 
         {
-            transform.position = OfficeBaseTransform.position;
+            DialogueManager.Instance.ExitDialogueMode();
+            EnableBButton(false);
+            transform.position = OfficeBaseTransform.position;            
             if (PlayerVolumeEffects.profile.TryGet<ChromaticAberration>(out ChromaticAberration chromaticAberration))
                 chromaticAberration.intensity.Override(0f);
         }            
-    }
-
-    // VISUAL EFFECTS vvv ---------------------------------------------------------
-    public void ModifyVolumeProfile(bool gameStart)
-    {
-        StartCoroutine(ChangeBloomEffect(gameStart));
     }
 
     IEnumerator ChangeBloomEffect(bool gameStart)
@@ -158,22 +185,27 @@ public class Player : MonoBehaviour
         bloom.intensity.value = endIntensity;
     }
 
-    public void SetRageEffect(int rage)
-    {
-        // Recognize addition
+
+
+    // ### Rage Display ### --- ### --- ### --- ### --- ###
+    public void DisplayRageShader(int rage)
+    { 
+        // If rage is higher than that, activate visual and audio cue for player feedback to know rage
         if (rage > 4)
-        {
+        {           
             // Map the rage from 0 - 10 to 0 - 2 to fit the Intensity Slider in the Shader
             float mappedRage = Mathf.Lerp(0f, 2f, (rage - 4f) / 6f);
             float mappedVolume = Mathf.Lerp(0f, 1f, (rage - 4f) / 6f);
 
             EnableOrDisableHeartBeat(true);
             StartCoroutine(HeartBeatShader(mappedRage, mappedVolume));
+            return;
         }
 
-        // Recognize subtraction
+        // If rage gets lower than that, switch off every effects etc.
         if (rage <= 4)
         {
+            enableBButton = false;
             StartCoroutine(HeartBeatShader(0, 0));
         }
     }
@@ -209,7 +241,9 @@ public class Player : MonoBehaviour
         if (heartBeatAudioSource.volume <= 0f) EnableOrDisableHeartBeat(false);
     }
 
-    // FUNCTIONAL METHODS vvv --------------------------------------------------
+
+
+    // ### Functional NPC Methods ### --- ### --- ### --- ### --- ###
 
     public People GetNearestNPC()
     {

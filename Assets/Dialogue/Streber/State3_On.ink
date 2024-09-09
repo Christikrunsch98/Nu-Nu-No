@@ -18,4 +18,5 @@ Und wenn es Regnet prasselt der Regen daran ab.
 Und jeder Holzbalken hat seine ganz eigene Herkunft und Geschichte.
 
 Es ist einfach einzigartig!
+~ SwitchDialogueState("Off")
 -> DONE

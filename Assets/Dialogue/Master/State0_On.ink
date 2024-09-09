@@ -10,3 +10,5 @@ Hier hast du die Möglichkeit dein Erlebtes selbst zu reflektieren.
 Ein bisschen Ruhe und Zeit in dir Selbst, sollte Dich runter bringen und auf neue Ideen kommen lassen.
 
 Sie dich ein wenig um und spiele mit deinen Gedanken und ihren Klängen.
+~ SwitchDialogueState("Off")
+-> END

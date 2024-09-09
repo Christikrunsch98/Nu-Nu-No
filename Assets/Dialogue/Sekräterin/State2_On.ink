@@ -14,17 +14,17 @@ Ich wollte ihn doch in den Kühlschrank stellen!>.<
     
 === antwort0 ===
 Oh danke für dein Mitgefühl!
-
+~ SwitchDialogueState("Off")
 -> DONE
 
 === antwort1 ===
 Ohh! Wie lieb von dir! Das wäre so nett!
-
+~ SwitchDialogueState("Off")
 -> DONE
 
 === antwort2 ===
 Mhmm... Stimmt, er würde ihn bestimmt noch essen...
 
 Na gut!
-
+~ SwitchDialogueState("Off")
 -> DONE

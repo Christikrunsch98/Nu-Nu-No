@@ -14,10 +14,11 @@ Wusstest du, dass es eine effiziente Methode gibt, um Frösche von einer Heizung
 === antwort ===
  #score:1
 Nein, weißt du's nicht? Frösche hüpfen weg, wenn sie heiß werden!
+
 -> end
 
 === end ===
 Bis bald! Haha!
 // C# -> People.DialogueState = CurrentDialogueState.Off;
-
+~ SwitchDialogueState("Off")
 -> DONE

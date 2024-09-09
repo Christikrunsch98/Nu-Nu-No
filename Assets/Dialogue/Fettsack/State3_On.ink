@@ -18,9 +18,11 @@ Dann wirst Du ja kein Problem haben meine Ziele mitzuerledigen!
 
     *[Dein Leben, Deine Verantwortung mein Freund! Ich mach meins und du machst deins.] #rage:-1 #rep:1
         Wie du willst! Ich entscheide mich für Essen! Haha!
+        ~ SwitchDialogueState("Off")
         -> DONE
     *[Wenn ich zwei Positionen ausfülle, verlierst du noch deinen Job. Lieber nicht mein Freund!] #rage:-3 #rep:2
         Du und meinen Job machen? Haha! Keine Angst, ich mach schon!
+        ~ SwitchDialogueState("Off")
         -> DONE
 
 === fussball ===
@@ -29,5 +31,5 @@ Na Klar! Was denkst du denn?! 3:1 abgesahnt wie kein anderer!
 Haha! Vielleicht schaffst du's beim nächsten Mal dabei zu sein!
 
 Wir sehen uns mein Freund!
-
+~ SwitchDialogueState("Off")
 -> DONE

@@ -1,5 +1,4 @@
 INCLUDE ..\globals.ink
 
 // Chef: State 0 : OFF
-
-Danke für das nette Gespräch.
+Muss ich nochmal deutlicher werden?! #rage:1

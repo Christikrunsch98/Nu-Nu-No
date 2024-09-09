@@ -1,6 +1,6 @@
 INCLUDE ..\globals.ink
 
-// Teamleiter: State 0 : ON
+// Teamleiter: State 2 : ON
 Hey, wieso antwortest du nicht auf meine Mail?
 
 Was hast du die ganze Zeit gemacht?
@@ -15,16 +15,18 @@ Du kannst mir nicht erzählen, dass es keine Arbeit gibt!
     ->antwort2
 
 === antwort0 ===
-Na dann aber ab!
+Na dann aber ab! #rage:1
+~ SwitchDialogueState("Off")
 -> DONE
 
 === antwort1 ===
 Hör mal! Dein Aufgabenbereich ist klar definitert!
 
-Sollte ich nochmal so eine nachlässige Antwort von dir bekommen, kannst du dich auf was gefasst machen!
+Sollte ich nochmal so eine Nachläsigkeit von dir erfahren, wirst du bald mal bei unserem Chef vorsitzen! #rage:3
+~ SwitchDialogueState("Off")
 -> DONE
 
 === antwort2 ===
-Was ist denn das für ein Ton? Du scheinst wohl zu vergessen, wer vor dir steht!
-
+Was ist denn das für ein Ton? Du scheinst wohl zu vergessen, wer vor dir steht! #rage:3
+~ SwitchDialogueState("Off")
 -> DONE

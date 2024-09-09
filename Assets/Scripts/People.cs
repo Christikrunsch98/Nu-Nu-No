@@ -24,6 +24,12 @@ public enum NPCState
     Talking = 4
 }
 
+public enum NPCMovementType
+{
+    Teleport,
+    Walking
+}
+
 public class People : MonoBehaviour
 {
     // COMING SOON: People's animator state machine
@@ -58,19 +64,23 @@ public class People : MonoBehaviour
     [Tooltip("Check to keep Dialogue State in every Game State")]
     public bool KeepDialogueState;
 
+    [HideInInspector] public Animator Animator;
+
     private NavMeshAgent agent;
-    private Animator animator;
     private Transform player;
     private Transform spotDefaultTarget;
     private bool resetNPCRotation;
 
-    // Start is called before the first frame update
+    private void Awake()
+    {        
+        Animator = GetComponent<Animator>();
+    }
+
     void Start()
     {
         player = GameManager.Instance.Player;
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = true;
-        animator = GetComponent<Animator>();
 
         // GameState <=> DialogueState Check up | First dialogue is always OninkJSON
         if (gameStates != null && gameStates.Count > 0) NPCDialogueState = CurrentDialogueState.On;
@@ -89,7 +99,7 @@ public class People : MonoBehaviour
         {
             if (timerRunning) StopTimer();
 
-            Interactable = true;            
+            Interactable = true;
             visualCue.SetActive(true);
             FaceSlerpPlayer();
         }
@@ -104,7 +114,7 @@ public class People : MonoBehaviour
         {
             Interactable = false;
             visualCue.SetActive(false);
-            
+
         }
 
         // WALKING
@@ -117,12 +127,12 @@ public class People : MonoBehaviour
         }
         else
         {
-            animator.SetBool("Walk?", false);   // Walk done
+            if (Animator != null) Animator.SetBool("Walk?", false);   // Walk done
             ResetNPCRotation(0.5f);          // wenn angegeben drehe NPC nachdem er auf seinem Spot angekommen ist, in den richtigen Angle, damit er in keine komische Richtung guckt
-            
+
             currentDestination = null;
         }
-                    
+
     }
 
     /// <summary>
@@ -136,10 +146,10 @@ public class People : MonoBehaviour
         currentGameState = null;
 
         // Error Warning (Just a Dev reminder)
-        if (gameStates.Count > 0 && gameStates.Count <= (int)GetLastEnumValue<GameStateEnum>()) Debug.LogError("The NPC [" + NPCName + "] has faulty gameStates list. The list should possess out of as many elements as there are Game States.");
-        
-        if (gameStates != null && gameStates.Count > 0 && !(gameStates.Count <= (int)GetLastEnumValue<GameStateEnum>()))  
-        currentGameState = gameStates[(int)GameManager.Instance.CurrentGameState];
+        if (gameStates.Count > 0 && gameStates.Count <= (int)GetLastEnumValue<GameStateEnum>()) Debug.LogError("The NPC [" + gameObject.name + "] has faulty gameStates list. The list should possess out of as many elements as there are Game States.");
+
+        if (gameStates != null && gameStates.Count > 0 && !(gameStates.Count <= (int)GetLastEnumValue<GameStateEnum>()))
+            currentGameState = gameStates[(int)GameManager.Instance.CurrentGameState];
         else return false;
 
         return true;
@@ -151,29 +161,12 @@ public class People : MonoBehaviour
         return (T)values.GetValue(values.Length - 1);
     }
 
-    public void SetupNPCForThisGameState()
-    {
-        if (this.gameObject.activeSelf == false) return;
-
-        // If no GameState is listed return
-        if (!SelectCurrentGameState(out GameState currentGameState)) return;
-
-        if (currentGameState.PresentInThisGameState)
-        {
-            this.gameObject.SetActive(currentGameState.PresentInThisGameState);
-            TeleportToOnOfficeSpot();
-        }
-        else
-        {
-            this.gameObject.SetActive(currentGameState.PresentInThisGameState);
-        }        
-    }
-
-
     // Movement ---------------------------------------
     public void SetCurrentDestination(Transform officeSpot)
     {
-        animator.SetBool("Walk?", true);
+        if (Animator == null) return;
+        
+        Animator.SetBool("Walk?", true);
         currentDestination = officeSpot;        
     }
 
@@ -191,8 +184,8 @@ public class People : MonoBehaviour
         if (player == null) return false;
 
         // Constrains:
-        if(animator != null)
-            if (animator.GetBool("Walk?") == true) return false;
+        if(Animator != null)
+            if (Animator.GetBool("Walk?") == true) return false;
 
         if (Vector3.Distance(player.position, transform.position) > interactionDistance) return false;
         else return true;
@@ -335,13 +328,12 @@ public class People : MonoBehaviour
     public void SwitchDialogueState(CurrentDialogueState currentDialogueState)
     {
         NPCDialogueState = currentDialogueState;
-        Debug.Log("NPC Dialogue State now is <" + currentDialogueState.ToString() + ">!");
     } 
 
     public void MoveToNextOfficeSpot()
     {
         // Checks: Only move when a Game State in the List exists otherwise return
-        if (!SelectCurrentGameState(out GameState currentGameState)) return;   
+        if (!SelectCurrentGameState(out GameState currentGameState)) return;      
 
         // Set next Destination when it is set so NPC moves to the location, see Update() Method
         switch (NPCDialogueState)
@@ -353,30 +345,41 @@ public class People : MonoBehaviour
                 if(currentGameState.CurrentGameState != GameStateEnum.State0)
                     if (gameStates[(int)currentGameState.CurrentGameState - 1].OffSpot == gameStates[(int)currentGameState.CurrentGameState].OnSpot) return;
 
-                StopTimer();
-                /*animator.SetBool("Walk?", true);*/
+                StopTimer();                
                 SetCurrentDestination(currentGameState.OnSpot.transform); // Walking
                 break;
             case CurrentDialogueState.Off:
                 if (currentGameState.OffSpot == null) return;
                 if (currentGameState.OffSpot == currentGameState.OnSpot) return;    // Don't set current destination in the first place if its the same as before
 
-                StopTimer();
-                /*animator.SetBool("Walk?", true);*/
+                StopTimer();                
                 SetCurrentDestination(currentGameState.OffSpot.transform); // Walking
                 break;
         }
     }
 
-    public void TeleportToOnOfficeSpot()
+    public void MoveToOnOfficeSpot(NPCMovementType movementType)
     {
-        // Checks: Only move when a Game State in the List exists otherwise return
+        // Check: Only move when a Game State in the List exists otherwise return
         if (!SelectCurrentGameState(out GameState currentGameState)) return;
+
+        if (currentGameState.PresentInThisGameState) this.gameObject.SetActive(true);
+        else
+        {
+            this.gameObject.SetActive(false);
+            return;
+        }
         
-        // if there is no OnSpot specified to teleport to or if the NPC is in the Off or None Mode return
+        // Check: OnSpot available? DialogueState On?
         if (currentGameState.OnSpot == null || NPCDialogueState != CurrentDialogueState.On) return;
 
-        // Teleportation
-        transform.position = currentGameState.OnSpot.transform.position;
+        //Debug.Log("[ " + gameObject.name + "]: OnSpot = " + currentGameState.OnSpot + ", dieser sollte als Destination gesetzt werden. Animator = " + Animator);
+
+        // Movement to new OnSpot
+        if(movementType == NPCMovementType.Teleport)
+            transform.position = currentGameState.OnSpot.transform.position;
+        SetCurrentDestination(currentGameState.OnSpot.transform);
+
+        ResetNPCRotation(0.1f);
     }
 }

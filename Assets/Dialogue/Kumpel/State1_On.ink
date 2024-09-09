@@ -11,10 +11,12 @@ Hey Hey Mein Freund! Na alles klar? Bereit für den heutigen Tag?
 
 === antwort0 ===
 So kenn ich meinen Freund! Niemals den Kopf in den Sand stecken!
+~ SwitchDialogueState("Off")
 -> DONE
 
 === antwort1 ===
 Ach kein Ding, du bist ruck zuck wieder fit, glaub mir!
 
 Wenn du was brauchst, komm einfach zu mir!
+~ SwitchDialogueState("Off")
 -> DONE

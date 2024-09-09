@@ -22,15 +22,22 @@ public enum GameStateEnum
 public class GameManager : MonoBehaviour
 {
     public Transform Player;
+    private Player player;
     public List<People> NPCs;
-    public TextMeshProUGUI RageText;
     public int Rage;
-    public RuntimeAnimatorController NörglerAnimator1;
-    public RuntimeAnimatorController NörglerAnimator2;
+
+    public TextMeshProUGUI RagePopUpTMP;
+    public TextMeshProUGUI InfoPopUpTMP;
+    [SerializeField] Animator vrRageGlassesAnimator;
+    [SerializeField] Animator vrInfoGlassesAnimator;
 
     public Transform OfficeStartSpot;
 
     public GameStateEnum CurrentGameState;
+
+    private float activationTime = 10.0f;
+    private float timer = 0.0f;
+
 
     // Die statische Instanz des GameManagers
     private static GameManager _instance;
@@ -67,59 +74,48 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        player = Player.gameObject.GetComponent<Player>();
+
         // Rage Score
         Rage = 0;
-        RageText.text = "0";
 
-        SetupGameState();
+        foreach (var NPC in NPCs)
+        {
+            NPC.MoveToOnOfficeSpot(NPCMovementType.Teleport);
+        }
     }
+
 
     public void AddRage(int add)
     {
         if ((Rage + add) > 10) Rage = 10;  // Clip to 10 max <-- Enter Ghost Room ???
-
         else if ((Rage + add) < 0) Rage = 0; // Clip to 0 min 
-
         else Rage += add;   // just add number
 
-        // Set UI Text & Player Heart Beat Effect Strength
-        RageText.text = Rage.ToString();
-        Player.gameObject.GetComponent<Player>().SetRageEffect(Rage);
+        // VR-Glasses PopUp's
+        if(add > 0) RagePopUpTMP.text = "Wut um " + add + " erhöht.";
+        else if (add < 0) RagePopUpTMP.text = "Wut um " + add + " gesenkt.";
 
-    }
-
-    public void SetupGameState()
-    {
-        foreach (var NPC in NPCs)
+        // Ghost Room PopUp
+        if (Rage >= 5)  
         {
-            NPC.SetupNPCForThisGameState();
+            InfoPopUpTMP.text = "Geisterraum jetzt verfügbar:\nDrücke B-Taste!";
+            vrInfoGlassesAnimator.SetTrigger("PopUp");
+            player.EnableBButton(true);
         }
+
+        // Rage PopUp
+        vrRageGlassesAnimator.SetTrigger("PopUp");
+
+        // Display rage shader
+        player.DisplayRageShader(Rage);   
     }
 
-    /// Game State Vorgaben ///
-    /// A - Der Anfang
-    /// Nörgler.OfficeSpot -> Küche_Kaffee
-    /// Nörgler.Reaktion -> Nörgler.OfficeSpot -> Küche_Snackautomat
-    /// -
-    /// B - Teil 1
-    /// Ätzender Kollege.OfficeSpot -> Arbeitsplatz.ÄtzenderKollege
-    /// Spieler Wegpunkt -> Arbeitsplatz.Spieler
-    /// Andere auf ihren Plätzen oder irgendwo
-    /// Meetingraum geschlossen und niemand zu sehen weiter
-    /// -
-    /// C - Teil 2
-    /// Alle im Meetingraum.Sitz1,.Sitz2,.Sitz3,...
-    /// Spieler Wegpunkt -> Meetingraum.Sitz6
-    /// Nach dem Verlassen Teamleiter.NebenSpieler
-    /// -
-    /// D - Teil 3
-    /// Küche - Fettsack -> Küche.Tischplatz2
-    /// Spieler -> Freie Sitzwahl aber Dialog mit Fettsack nötig
-    /// -
-    /// E - Teil 4
-    /// Spieler -> Büro des Chefs vor dem Schreibtisch des Ches
-    /// Chef -> Chefbüro.Chefsessel
-    /// Endboss Gespräch langer Dialog, Geistesraum besuche 2 oder so und dann Ende
+    public void ResetRage()
+    {
+        Rage = 0;
+    }
+
     public void ContinueToNextGameState()
     {       
         // Change actual CurrentGameState
@@ -144,8 +140,12 @@ public class GameManager : MonoBehaviour
         foreach (var NPC in NPCs)
         {
             if (NPC.KeepDialogueState) continue;
-            NPC.SwitchDialogueState(CurrentDialogueState.On);  // Set's On to true, meaning ONinkJSON will be used next            
-            NPC.SetupNPCForThisGameState();
+            NPC.SwitchDialogueState(CurrentDialogueState.On);  // Set's On to true, meaning ONinkJSON will be used next
+            NPC.MoveToOnOfficeSpot(NPCMovementType.Walking);                                                               
         }
+
+        player.EnableBButton(true);
+        InfoPopUpTMP.text = "Büro jetzt verfügbar:\nDrücke B-Taste!";
+        vrInfoGlassesAnimator.SetTrigger("PopUp");
     }
 }

@@ -1,1 +1,1 @@
-﻿{"inkVersion":21,"root":[["\n","done",["done",{"#f":5,"#n":"g-0"}],null],"done",{"global decl":["ev","str","^","/str",{"VAR=":"pokemonName"},-1,{"VAR=":"fettsackRep"},"/ev","end",null],"#f":1}],"listDefs":{}}
+﻿{"inkVersion":21,"root":[["\n","^Auf ein erneutes Wiedersehen! Es war mir ein Vergnügen!","\n","ev","str","^Next","/str",{"x()":"ContinueToNextGameState","exArgs":1},"pop","/ev","\n","done",["done",{"#f":5,"#n":"g-0"}],null],"done",{"global decl":["ev","str","^","/str",{"VAR=":"pokemonName"},"/ev","end",null],"#f":1}],"listDefs":{}}

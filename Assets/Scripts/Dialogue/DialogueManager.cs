@@ -226,6 +226,8 @@ public class DialogueManager : MonoBehaviour
 
     public void ExitDialogueMode()
     {
+        if (!DialogueIsPlaying) return;
+
         dialogueVarbiables.StopListening(currentStory);
         inkExternalFunctions.Unbind(currentStory);
 
@@ -248,10 +250,14 @@ public class DialogueManager : MonoBehaviour
             if (nextLine.Trim().Equals(""))
             {
                 HandleTags(currentStory.currentTags);
+                
                 nextLine = currentStory.Continue();
-            }                
+            }
 
             // Set the text for the current dialogue line
+            if (nextLine.Length >= 165) dialogueText.fontSize = 16f;
+            else dialogueText.fontSize = 18f;
+
             dialogueText.text = nextLine;
 
             // display choices, if any, for this dialogue line

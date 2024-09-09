@@ -13,10 +13,12 @@ Weißt du, am liebsten gehe ich am Wochenende fischen.
 
 === freude ===
 Ja. Die Natur ist bezaubernd am See.    #score:1
+~ SwitchDialogueState("Off")
 -> end
 
 === frage ===
 Ja tatsächlich, es entspannt mich sehr. #score:-1
+~ SwitchDialogueState("Off")
 -> end
 
 === end ===

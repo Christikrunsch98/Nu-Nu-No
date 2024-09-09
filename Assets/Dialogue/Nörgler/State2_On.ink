@@ -15,10 +15,10 @@ Warum wird hier nie auf meine Meinung gehört?!
 
 ===antwort1===
 Ich glaub nicht... Meinst du? SOLL ICH NOCH LAUTER REDEN?!
-
+~ SwitchDialogueState("Off")
 -> DONE
 
 ===antwort2===
 Stimmt du hast recht! Nächstes Mal leg ich noch eins drauf! Zep Zep!
-
+~ SwitchDialogueState("Off")
 -> DONE
