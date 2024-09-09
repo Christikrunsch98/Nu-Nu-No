@@ -15,6 +15,6 @@ Ihr macht heute Überstunden! AAALLLEEE!!!
 
 Das war's! Lasst euch nicht mehr Blicken, bis ihr nicht grandiose Ergebnisse vorzuweisen habt!
 
-Nach macht schon! Ab an die Arbeit!
+Nach macht schon! Ab an die Arbeit! #rage:1
 ~SwitchDialogueState("Off")
 -> DONE

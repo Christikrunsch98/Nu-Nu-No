@@ -11,7 +11,7 @@ Hey, ich bin nächste Woche im Urlaub, kannst du mein Projekt mit übernehmen? H
 
 
 ===antwort0===
-Bleib Locker, weißt du, einer muss es ja machen. Dann halt nicht!
+Bleib Locker, weißt du, einer muss es ja machen. Dann halt nicht! #rage:-1 
 ~ SwitchDialogueState("Off")
 -> DONE
 

@@ -12522,6 +12522,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 125
       objectReference: {fileID: 0}
+    - target: {fileID: 8473409441100465802, guid: b2baa11c7e87fe941afe32f3c50cc082, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.028
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -68547,7 +68551,7 @@ PrefabInstance:
     - target: {fileID: 4215574155842851928, guid: 9e5c708cb3e2240499c61257f54940e7, type: 3}
       propertyPath: gameStates.Array.data[3].OnSpot
       value: 
-      objectReference: {fileID: 1358115212}
+      objectReference: {fileID: 84267802}
     - target: {fileID: 4215574155842851928, guid: 9e5c708cb3e2240499c61257f54940e7, type: 3}
       propertyPath: gameStates.Array.data[0].OffSpot
       value: 
@@ -68559,11 +68563,11 @@ PrefabInstance:
     - target: {fileID: 4215574155842851928, guid: 9e5c708cb3e2240499c61257f54940e7, type: 3}
       propertyPath: gameStates.Array.data[2].OffSpot
       value: 
-      objectReference: {fileID: 1358115212}
+      objectReference: {fileID: 84267802}
     - target: {fileID: 4215574155842851928, guid: 9e5c708cb3e2240499c61257f54940e7, type: 3}
       propertyPath: gameStates.Array.data[3].OffSpot
       value: 
-      objectReference: {fileID: 906622215}
+      objectReference: {fileID: 84267802}
     - target: {fileID: 4215574155842851928, guid: 9e5c708cb3e2240499c61257f54940e7, type: 3}
       propertyPath: gameStates.Array.data[0].PresentInThisGameState
       value: 1
