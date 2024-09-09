@@ -9,7 +9,7 @@ Du kannst mir nicht erzählen, dass es keine Arbeit gibt!
 
 *[Ich bin sofort dabei...']
     ->antwort0
-*[Wenn sie so wichtig sind, wäre es vielleicht sinnvoll, deutlicher darauf hinzuweisen.]
+*[Ich war so beschäftigt mit meinen Aufgaben, dass ich deine Mail wohl übersehen habe.]
     ->antwort1
 *[Es gibt genug Arbeit ja, aber ich kann auch nicht alles auf einmal machen!]
     ->antwort2

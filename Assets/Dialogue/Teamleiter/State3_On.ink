@@ -7,24 +7,24 @@ Was hast du die ganze Zeit gemacht?
 
 Du kannst mir nicht erzählen, dass es keine Arbeit gibt!
 
-*[Ich war so beschäftigt mit meinen Aufgaben, dass ich deine Mail wohl übersehen habe.]
+*[Wenn sie so wichtig sind, wäre es vielleicht sinnvoll, deutlicher darauf hinzuweisen.] #rage:-2
     ->antwort0
-*[Es tut mir leid, dass ich nicht schneller geantwortet habe. Danke, dass du mich darauf hingewiesen hast.]
+*[Nein, Arbeit gibt es genug. Du brauchst mich nicht unter Druck setzen. Ich kenn unsere Prioritäten!] #rage:-3
     ->antwort1
-*[Verstanden, ich werde mich sofort darum kümmern. Danke für die Erinnerung!]
+*[Verstanden, ich werde mich sofort darum kümmern. Danke für die Erinnerung!] #rage:-3
     ->antwort2
 
 === antwort0 ===
-Na dann aber jetzt zack zack. Jetzt bloß keine Zeit verschwenden! #rage:-1
+Ich hoffe das ist dir deutlich genug. Also los! 
 ~ SwitchDialogueState("Off")
 -> DONE
 
 === antwort1 ===
-Ja, wir wollen hier keine Zeit verlieren! #rage:-2
+Ja, wir wollen hier keine Zeit verlieren! 
 ~ SwitchDialogueState("Off")
 -> DONE
 
 === antwort2 ===
-Das will ich hören! Na dann auf auf! #rage:-3
+Das will ich hören! Na dann auf auf! 
 ~ SwitchDialogueState("Off")
 -> DONE

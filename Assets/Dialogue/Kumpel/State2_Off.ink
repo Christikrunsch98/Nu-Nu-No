@@ -1,7 +1,7 @@
 INCLUDE ..\globals.ink
 
 // Kumpel: State 2 : OFF
-Na das Meeting lief ja gut! Ich bin mir sicher alle werden heute einen richtig erfolgreichen Tag haben!
+Brauchst du etwas?
 
 *[Die einen mehr, die anderen weniger!]
     ->antwort0
@@ -13,13 +13,16 @@ Na das Meeting lief ja gut! Ich bin mir sicher alle werden heute einen richtig e
     ->antwort2
 
 === antwort0 ===
-Jeder Tag ist ein Chance, neu und frisch zu starten!
+Jeder Tag ist ein Chance, neu und frisch zu starten! #rage:-1
+~ SwitchDialogueState("Off")
 -> DONE
 
 === antwort1 ===
-Haha! Na klar!
+Haha! Na klar! #rage:-1
+~ SwitchDialogueState("Off")
 -> DONE
 
 === antwort2 ===
-Hach mein Freund, das passt schon! Nicht verzagen, lass dir von keinem den Tag verderben!
+Hach mein Freund, das passt schon! Nicht verzagen, lass dir von keinem den Tag verderben! #rage:-1
+~ SwitchDialogueState("Off")
 -> DONE

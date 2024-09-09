@@ -4,9 +4,9 @@ INCLUDE ..\globals.ink
 
 Hey, ich bin nächste Woche im Urlaub, kannst du mein Projekt mit übernehmen? Hehe
 
-*[Schwache Einstellung. Wer hier Erfolg haben will, zeigt Einsatz. Wenn das nicht dein Ding ist, überleg' dir deine Prioritäten.] #rage:0 // Einfaches Hinnehmen der Sache
+*[Wer hier Erfolg haben will, zeigt Einsatz. Wenn das nicht dein Ding ist, überleg' dir deine Prioritäten.] #rage:0 // Einfaches Hinnehmen der Sache
 ->antwort0
-*[Urlaub klingt toll! Ich bin zwar nächste Woche voll ausgelastet, aber lass uns jemanden finden, der dich vertreten kann.] #rage:0 // Entgegensetzen
+*[Urlaub klingt toll! Ich bin nächste Woche voll ausgelastet, aber lass uns jemanden finden, der dich vertreten kann.] #rage:0 // Entgegensetzen
 ->antwort1
 
 

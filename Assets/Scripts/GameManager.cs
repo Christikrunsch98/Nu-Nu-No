@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
                 // Falls keine Instanz vorhanden ist, wird eine neue erstellt
                 GameObject gameManager = new GameObject("GameManager");
                 _instance = gameManager.AddComponent<GameManager>();
-                DontDestroyOnLoad(gameManager);
+                /*DontDestroyOnLoad(gameManager);*/
             }
             return _instance;
         }
@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
         if (_instance == null)
         {
             _instance = this;
-            DontDestroyOnLoad(gameObject);
+            /*DontDestroyOnLoad(gameObject);*/
         }
         else if (_instance != this)
         {

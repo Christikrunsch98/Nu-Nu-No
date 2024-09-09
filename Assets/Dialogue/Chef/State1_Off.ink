@@ -5,7 +5,7 @@ Was gibt's?
 -> main
 
 === main ===
-Hast du irgendetwas Gutes zu melden?
+Irgendetwas Gutes zu melden?!
     *[Ja, tatsächlich]
         ->ant0
         
@@ -22,6 +22,6 @@ Dann lass mal hören!
         -> DONE
 
 === ant1 ===
-Wie kannst du es wagen! Mach dich sofort an die Arbeit! #rage:3
+Wie kannst du es wagen! Mach dich sofort an die Arbeit! #rage:1
 
 -> DONE

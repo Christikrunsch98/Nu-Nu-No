@@ -8,7 +8,7 @@ Hey Hey Bongo! Wie wär's mit einem Snack?
 === main ===
 Was würdest du lieber essen?
     *[Ein Schokoriegel] 
-        Gute Wahl mein Freund! Haha!  
+        Gute Wahl mein Freund! Haha! 
         -> snack
     *[Eine große Pizza!] 
         -> pizza
@@ -16,11 +16,11 @@ Was würdest du lieber essen?
         -> smoothie
     
 === snack ===
-Na dann frohes Kauen! Haha!
+Na dann frohes Kauen! Haha! #rage:-1
 -> end
 
 === pizza ===
-Ohho! Ich mach sofort die Bestellung fertig!
+Ohho! Ich mach sofort die Bestellung fertig! #rage:-1
 ->end
 
 === smoothie  ===

@@ -3,7 +3,7 @@ INCLUDE ..\globals.ink
 // Master: State 1
 Willkommen zurück! Komm für einen Moment an und lasse deine Gedanken los.
 
-Wut ist eine Emotion und sie ist ein Katalysator. Spürst du wo du die Energie hinlenken möchtest?
+Wut ist eine Emotion und sie ist ein Katalysator. Spürst du wo du die Energie hinlenken könntest?
 
 Gut, jetzt wandelt deine Aufmerksamkeit Wut in Weite um und das Wüten in Würde.
 

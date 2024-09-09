@@ -10,11 +10,11 @@ Aber wer nicht mitreden kann, geht arbeiten so einfach ist!
 
     *[Das stimmt, wie ist es denn ausgegangen?] #rage:0  
         -> weiter
-    *[Was glaubst du wer hier die Regeln aufstellt?!]#rage:3
+    *[Was glaubst du wer hier die Regeln aufstellt?!]#rage:1
         -> beleidigung
     
 === weiter ===
-Wie jetzt?! Das fragst Du noch? Was ein Looser, HAHAHA! #rage:4
+Wie jetzt?! Das fragst Du noch? Was ein Looser, HAHAHA! #rage:1
 ~ SwitchDialogueState("Off")
 -> END
 

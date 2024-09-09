@@ -35,11 +35,9 @@ OMG, echt?! Ohh wow, hi hi. Das nehme ich als Kompliment!
 Ah okay... Hmm, blau liegt in der Farbskala nah bei Lila... 
 
 Ähm, Danke!
-~ SwitchDialogueState("Off")
 -> DONE
 
 === end ===
 Jetzt bin ich ganz außer mir. Danke für das nette Gespräch!
-~ SwitchDialogueState("Off")
 -> DONE
     

@@ -7,7 +7,9 @@ Ihrem Wesen, ihren Erfahrungen nach sind sie dominant, zielsicher und durchsetzu
 
 Ängstige dich nicht vor ihnen. Es geht bei ihnen nicht um Schuld, sondern um Respekt und Fokus für die Sache.
 
-Deine Antworten waren gut! Lass dich nicht entmutigen!
+Andere hingegen fahren ohne dich zu bemerken, weit über deine Grenzen.
+
+Lass dich nicht entmutigen! Sage Nein und es werden Wunder geschehen!
 
 Zeige dich ehrlich und aufrichtig und der Sieg ist dein!
 ~SwitchDialogueState("Off")
